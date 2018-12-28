@@ -1,4 +1,4 @@
-package Coordinations;
+package Coordinates;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package Coordinations;
+package Coordinates;
 
 import Geom.Point3D;
 
