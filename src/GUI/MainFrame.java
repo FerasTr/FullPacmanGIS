@@ -1,7 +1,12 @@
 package GUI;
 
+import ToServer.HandleServer;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * JFrame window that contains the playground panel and menu bar to control the game.
@@ -15,14 +20,10 @@ public class MainFrame extends JFrame
     private JMenuBar optionsBar = new JMenuBar();
     // Game options
     private JMenu gameOptions = new JMenu("Options");
+    private JMenuItem gameRun = new JMenuItem("Run");
     private JMenuItem gameOpen = new JMenuItem("Open");
     private JMenuItem gameSave = new JMenuItem("Save");
     private JMenuItem gameClear = new JMenuItem("Clear");
-    // Insert options
-    private JMenu gameInsert = new JMenu("Insert");
-    private JMenuItem insertPacman = new JMenuItem("PACMAN");
-    private JMenuItem insertFruit = new JMenuItem("Fruit");
-    private JMenuItem gameRun = new JMenuItem("Run");
 
     /**
      * JFrame constructor, builds game menu bad and adds the playground panel to the frame
@@ -35,14 +36,36 @@ public class MainFrame extends JFrame
         gameOptions.add(gameSave);
         gameOptions.add(gameClear);
         optionsBar.add(gameOptions);
-        gameInsert.add(insertPacman);
-        gameInsert.add(insertFruit);
-        optionsBar.add(gameInsert);
+
+        // ActionListeners for menu buttons
+        gameOpen.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                OpenFile();
+            }
+        });
+
         getContentPane().add(optionsBar, BorderLayout.NORTH);
         // JFrame settings
         setSize(WIDTH, HEIGHT);
         setMinimumSize(new Dimension(300, 100));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+    }
+
+    private void OpenFile()
+    {
+        File selectedFile;
+        JFileChooser fileChooser = new JFileChooser("./data");
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION)
+        {
+            selectedFile = fileChooser.getSelectedFile();
+            String fileName = selectedFile.getPath();
+            System.out.println("Selected file: " + fileName);
+            HandleServer.initGame(fileName);
+        }
     }
 }
