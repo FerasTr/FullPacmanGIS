@@ -1,5 +1,5 @@
 package GameElements;
 
-public class Ghost
+public class Ghost implements GameElement
 {
 }

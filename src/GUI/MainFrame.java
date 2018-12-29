@@ -13,16 +13,15 @@ import java.io.File;
  */
 public class MainFrame extends JFrame
 {
-    // Final variables
+    // Final variables \\
     private final int WIDTH = 1433;
     private final int HEIGHT = 642;
-    // Menu Bar
+    // Menu Bar \\
     private JMenuBar optionsBar = new JMenuBar();
-    // Game options
+    // Game options \\
     private JMenu gameOptions = new JMenu("Options");
     private JMenuItem gameRun = new JMenuItem("Run");
     private JMenuItem gameOpen = new JMenuItem("Open");
-    private JMenuItem gameSave = new JMenuItem("Save");
     private JMenuItem gameClear = new JMenuItem("Clear");
 
     /**
@@ -30,14 +29,13 @@ public class MainFrame extends JFrame
      */
     public MainFrame()
     {
-        // Add the menu bar and its elements to the frame
+        // Add the menu bar and its elements to the frame \\
         gameOptions.add(gameRun);
         gameOptions.add(gameOpen);
-        gameOptions.add(gameSave);
         gameOptions.add(gameClear);
         optionsBar.add(gameOptions);
 
-        // ActionListeners for menu buttons
+        // ActionListeners for menu buttons \\
         gameOpen.addActionListener(new ActionListener()
         {
             @Override
@@ -48,13 +46,16 @@ public class MainFrame extends JFrame
         });
 
         getContentPane().add(optionsBar, BorderLayout.NORTH);
-        // JFrame settings
+        // JFrame settings \\
         setSize(WIDTH, HEIGHT);
         setMinimumSize(new Dimension(300, 100));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
+    /**
+     * Open and initialize game from a CSV file (send game to server).
+     */
     private void OpenFile()
     {
         File selectedFile;
@@ -65,6 +66,7 @@ public class MainFrame extends JFrame
             selectedFile = fileChooser.getSelectedFile();
             String fileName = selectedFile.getPath();
             System.out.println("Selected file: " + fileName);
+            System.out.println("Sending to server...");
             HandleServer.initGame(fileName);
         }
     }

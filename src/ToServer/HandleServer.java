@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 final public class HandleServer
 {
-    // Variables
+    // Variables \\
     private static Play play = null;
 
     // Constructors
@@ -17,7 +17,7 @@ final public class HandleServer
     {
     }
 
-    // Main methods
+    // Main methods \\
     public static void initGame(String fileName)
     {
         // 1) Create a "play" from a file.
@@ -36,7 +36,7 @@ final public class HandleServer
     public static void gameData()
     {
         // 4) get the game-board data
-        GetGameData(play);
+        GetGameData();
         System.out.println("Init Player Location should be set using the bounding box info");
     }
 
@@ -71,7 +71,7 @@ final public class HandleServer
             System.out.println(info);
 
             // 7.3) get the game-board current state
-            GetGameData(play);
+            GetGameData();
         }
     }
 
@@ -89,8 +89,8 @@ final public class HandleServer
         System.out.println(info);
     }
 
-    // Helper methods
-    private static void GetGameData(Play play)
+    // Helper methods \\
+    private static void GetGameData()
     {
         ArrayList<String> board_data;
         board_data = play.getBoard();
@@ -99,5 +99,16 @@ final public class HandleServer
             System.out.println(board_data.get(a));
         }
         System.out.println();
+    }
+
+    public static void main(String[] args)
+    {
+        initGame("data/Ex4_OOP_example2.csv");
+        playgroundInfo();
+        gameData();
+        setLocation();
+        startServer();
+        play();
+        gameStatistics();
     }
 }

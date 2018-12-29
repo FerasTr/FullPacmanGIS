@@ -1,5 +1,5 @@
 package GameElements;
 
-public class Player
+public class Player implements GameElement
 {
 }
