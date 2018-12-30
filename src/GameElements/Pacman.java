@@ -39,6 +39,7 @@ public class Pacman implements GameElement
         return ID;
     }
 
+    @Override
     public Point3D getLocation()
     {
         return location;
@@ -80,7 +81,7 @@ public class Pacman implements GameElement
     {
         try
         {
-            return ImageIO.read(new File("./data/icons/pacman.png"));
+            return ImageIO.read(new File("./data/icons/cm.png"));
         }
         catch (IOException e)
         {

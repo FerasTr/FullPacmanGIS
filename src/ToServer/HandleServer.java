@@ -28,6 +28,7 @@ final public class HandleServer
         // 2) Set your ID
         play.setIDs(133713376);
         // Return game from play object
+        gameData();
         return game;
     }
 

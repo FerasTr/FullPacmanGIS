@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class Game
 {
     private Player player;
-    ArrayList<Pacman> pacmanBots;
-    ArrayList<Ghost> ghostBots;
-    ArrayList<Fruit> fruits;
-    ArrayList<Box> obstecales;
+    private ArrayList<GameElement> pacmanBots;
+    private ArrayList<GameElement> ghostBots;
+    private ArrayList<GameElement> fruits;
+    private ArrayList<Box> obstecales;
 
     public Game()
     {
@@ -30,32 +30,32 @@ public class Game
         this.player = player;
     }
 
-    public ArrayList<Pacman> getPacmanBots()
+    public ArrayList<GameElement> getPacmanBots()
     {
         return pacmanBots;
     }
 
-    public void setPacmanBots(ArrayList<Pacman> pacmanBots)
+    public void setPacmanBots(ArrayList<GameElement> pacmanBots)
     {
         this.pacmanBots = pacmanBots;
     }
 
-    public ArrayList<Ghost> getGhostBots()
+    public ArrayList<GameElement> getGhostBots()
     {
         return ghostBots;
     }
 
-    public void setGhostBots(ArrayList<Ghost> ghostBots)
+    public void setGhostBots(ArrayList<GameElement> ghostBots)
     {
         this.ghostBots = ghostBots;
     }
 
-    public ArrayList<Fruit> getFruits()
+    public ArrayList<GameElement> getFruits()
     {
         return fruits;
     }
 
-    public void setFruits(ArrayList<Fruit> fruits)
+    public void setFruits(ArrayList<GameElement> fruits)
     {
         this.fruits = fruits;
     }

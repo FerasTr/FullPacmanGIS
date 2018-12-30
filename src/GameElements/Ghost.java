@@ -36,6 +36,7 @@ public class Ghost implements GameElement
         return ID;
     }
 
+    @Override
     public Point3D getLocation()
     {
         return location;
@@ -70,7 +71,7 @@ public class Ghost implements GameElement
     {
         try
         {
-            return ImageIO.read(new File("./data/icons/ghost.png"));
+            return ImageIO.read(new File("./data/icons/antimage.png"));
         }
         catch (IOException e)
         {

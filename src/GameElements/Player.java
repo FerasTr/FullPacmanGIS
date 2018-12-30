@@ -3,8 +3,14 @@ package GameElements;
 import Coordinates.MyCoords;
 import Coordinates.Point3D;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 public class Player implements GameElement
 {
+    public static final BufferedImage player = initImg();
     private Point3D location;
     private double speed;
     private double radius;
@@ -58,5 +64,18 @@ public class Player implements GameElement
     public double angelToMove(Point3D point)
     {
         return MyCoords.azimuth_elevation_dist(this.location, point)[0];
+    }
+
+    private static BufferedImage initImg()
+    {
+        try
+        {
+            return ImageIO.read(new File("./data/icons/invoker.png"));
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

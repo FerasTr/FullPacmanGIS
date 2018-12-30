@@ -19,12 +19,15 @@ public class MainFrame extends JFrame
     private final int WIDTH = 1433;
     private final int HEIGHT = 642;
     // Menu Bar \\
-    private JMenuBar optionsBar = new JMenuBar();
+    private JMenuBar gameBar = new JMenuBar();
     // Game options \\
     private JMenu gameOptions = new JMenu("Options");
-    private JMenuItem gameRun = new JMenuItem("Run");
-    private JMenuItem gameOpen = new JMenuItem("Open");
-    private JMenuItem gameClear = new JMenuItem("Clear");
+    private JMenuItem optionsRun = new JMenuItem("Run");
+    private JMenuItem optionsOpen = new JMenuItem("Open");
+    private JMenuItem optionsClear = new JMenuItem("Clear");
+    // Game insert \\
+    private JMenu gameInsert = new JMenu("Insert");
+    private JMenuItem insertPlayer = new JMenuItem("Player");
 
     private Game game = null;
     private PlaygroundPanel battleground;
@@ -37,14 +40,19 @@ public class MainFrame extends JFrame
         // Battleground world settings
         battleground = new PlaygroundPanel(battlegroundMap);
         // Add the menu bar and its elements to the frame
-        gameOptions.add(gameRun);
-        gameOptions.add(gameOpen);
-        gameOptions.add(gameClear);
-        optionsBar.add(gameOptions);
+        gameOptions.add(optionsRun);
+        gameOptions.add(optionsOpen);
+        gameOptions.add(optionsClear);
+        gameBar.add(gameOptions);
+        gameInsert.add(insertPlayer);
+        gameBar.add(gameInsert);
         // Add the panel to the JFrame
         add(battleground);
-        // ActionListeners for menu buttons
-        gameOpen.addActionListener(new ActionListener()
+        // Button options
+        optionsRun.setEnabled(false);
+        insertPlayer.setEnabled(false);
+
+        optionsOpen.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -53,7 +61,25 @@ public class MainFrame extends JFrame
             }
         });
 
-        getContentPane().add(optionsBar, BorderLayout.NORTH);
+        optionsClear.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                ClearGame();
+            }
+        });
+
+        insertPlayer.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                AddPlayer();
+            }
+        });
+
+        getContentPane().add(gameBar, BorderLayout.NORTH);
         // JFrame settings
         setSize(WIDTH, HEIGHT);
         setMinimumSize(new Dimension(300, 100));
@@ -61,11 +87,27 @@ public class MainFrame extends JFrame
         setVisible(true);
     }
 
+    private void AddPlayer()
+    {
+    }
+
+    private void ClearGame()
+    {
+        game.clearGame();
+        battleground.updateGame(game);
+        optionsRun.setEnabled(false);
+        insertPlayer.setEnabled(false);
+    }
+
     /**
      * Open and initialize game from a CSV file (send game to server).
      */
     private void OpenFile()
     {
+        if (game != null)
+        {
+            game.clearGame();
+        }
         File selectedFile;
         JFileChooser fileChooser = new JFileChooser("./data");
         int result = fileChooser.showOpenDialog(null);
@@ -77,6 +119,8 @@ public class MainFrame extends JFrame
             System.out.println("Sending to server...");
             game = HandleServer.initGame(fileName);
             battleground.updateGame(game);
+            insertPlayer.setEnabled(true);
         }
+        System.out.println("Please insert a player to run the game...");
     }
 }

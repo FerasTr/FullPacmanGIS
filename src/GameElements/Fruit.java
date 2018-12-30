@@ -35,6 +35,7 @@ public class Fruit implements GameElement
         return ID;
     }
 
+    @Override
     public Point3D getLocation()
     {
         return location;
@@ -61,7 +62,7 @@ public class Fruit implements GameElement
     {
         try
         {
-            return ImageIO.read(new File("./data/icons/fruit.png"));
+            return ImageIO.read(new File("./data/icons/cour.png"));
         }
         catch (IOException e)
         {

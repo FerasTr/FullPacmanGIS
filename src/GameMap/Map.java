@@ -21,7 +21,7 @@ public class Map
     {
         map_path = base;
         this.mapRange = mapRange;
-q    }
+    }
 
     /**
      * Return the map
