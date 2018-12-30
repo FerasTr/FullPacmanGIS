@@ -1,7 +1,5 @@
 package Coordinates;
 
-import Geom.Point3D;
-
 import static org.junit.Assert.*;
 
 public class MyCoordsTest

@@ -2,7 +2,7 @@ package Map;
 
 
 import Coordinates.MyCoords;
-import Geom.Point3D;
+import Coordinates.Point3D;
 
 import java.awt.image.BufferedImage;
 

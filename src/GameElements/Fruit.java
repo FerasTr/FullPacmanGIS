@@ -4,21 +4,27 @@ import Coordinates.Point3D;
 
 public class Fruit implements GameElement
 {
-    public static int ID = -1;
+    public int ID = -1;
     private Point3D location;
     private double weight;
 
     // Constructor \\
     public Fruit(double lat, double lon, double alt, double weight)
     {
-        String location_string = "(" + lat + "," + lon + "," + alt + ")";
+        String location_string = "w(" + lat + "," + lon + "," + alt + ")";
         this.location = new Point3D(location_string);
-        ID++;
         this.weight = weight;
     }
 
+    public Fruit(String[] lineElements)
+    {
+        ID = Integer.parseInt(lineElements[1]);
+        location = new Point3D(lineElements[2] + "," + lineElements[3] + "0");
+        weight = Double.parseDouble(lineElements[5]);
+    }
+
     // Getters & Setters \\
-    public static int getID()
+    public int getID()
     {
         return ID;
     }
@@ -40,7 +46,7 @@ public class Fruit implements GameElement
 
     // Methods \\
 
-    public static void resetCounter()
+    public void resetCounter()
     {
         ID = -1;
     }

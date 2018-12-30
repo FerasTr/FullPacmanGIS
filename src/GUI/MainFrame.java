@@ -1,5 +1,6 @@
 package GUI;
 
+import GameElements.Game;
 import ToServer.HandleServer;
 
 import javax.swing.*;
@@ -23,6 +24,7 @@ public class MainFrame extends JFrame
     private JMenuItem gameRun = new JMenuItem("Run");
     private JMenuItem gameOpen = new JMenuItem("Open");
     private JMenuItem gameClear = new JMenuItem("Clear");
+    private Game game;
 
     /**
      * JFrame constructor, builds game menu bad and adds the playground panel to the frame

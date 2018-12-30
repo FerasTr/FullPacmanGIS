@@ -1,7 +1,7 @@
 package Map;
 
 import Coordinates.MyCoords;
-import Geom.Point3D;
+import Coordinates.Point3D;
 
 /**
  * Range class to build the map borders.

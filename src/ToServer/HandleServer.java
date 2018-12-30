@@ -1,5 +1,7 @@
 package ToServer;
 
+import GameElements.Game;
+import GameElements.Pacman;
 import Robot.Play;
 
 import java.util.ArrayList;
@@ -11,8 +13,9 @@ final public class HandleServer
 {
     // Variables \\
     private static Play play = null;
+    private static Game game = null;
 
-    // Constructors
+    // Constructors \\
     private HandleServer()
     {
     }
@@ -24,6 +27,8 @@ final public class HandleServer
         play = new Play(fileName);
         // 2) Set your ID
         play.setIDs(133713376);
+        // Build game from play object
+        game = new Game();
     }
 
     public static void playgroundInfo()
@@ -92,11 +97,30 @@ final public class HandleServer
     // Helper methods \\
     private static void GetGameData()
     {
+        System.out.println("Parsing game data");
         ArrayList<String> board_data;
         board_data = play.getBoard();
-        for (int a = 0; a < board_data.size(); a++)
+        for (int i = 0; i < board_data.size(); i++)
         {
-            System.out.println(board_data.get(a));
+            String line = board_data.get(i);
+            System.out.println(line);
+            String[] lineElements = line.split(",");
+            if (lineElements[0].equals("P"))
+            {
+                game.addPacman(new Pacman(lineElements));
+            }
+            else if (lineElements[0].equals("F"))
+            {
+
+            }
+            else if (lineElements[0].equals("G"))
+            {
+
+            }
+            else if (lineElements[0].equals("B"))
+            {
+
+            }
         }
         System.out.println();
     }

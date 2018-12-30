@@ -4,7 +4,7 @@ import Coordinates.Point3D;
 
 public class Pacman implements GameElement
 {
-    public static int ID = -1;
+    public int ID = -1;
     private Point3D location;
     private double speed;
     private double radius;
@@ -15,13 +15,20 @@ public class Pacman implements GameElement
     {
         String location_string = "(" + lat + "," + lon + "," + alt + ")";
         this.location = new Point3D(location_string);
-        ID++;
         this.speed = speed;
         this.radius = radius;
     }
 
+    public Pacman(String[] lineElements)
+    {
+        ID = Integer.parseInt(lineElements[1]);
+        location = new Point3D(lineElements[2] + "," + lineElements[3] + "0");
+        speed = Double.parseDouble(lineElements[5]);
+        radius = Double.parseDouble(lineElements[6]);
+    }
+
     // Getters & Setters \\
-    public static int getID()
+    public int getID()
     {
         return ID;
     }
@@ -58,7 +65,7 @@ public class Pacman implements GameElement
 
     // Methods \\
 
-    public static void resetCounter()
+    public void resetCounter()
     {
         ID = -1;
     }

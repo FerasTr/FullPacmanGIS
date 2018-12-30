@@ -1,7 +1,5 @@
 package Coordinates;
 
-import Geom.Point3D;
-
 /**
  * This class implements coords_converter interface, it is used for basic calculations on points.
  */
