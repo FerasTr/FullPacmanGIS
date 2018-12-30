@@ -71,7 +71,7 @@ public class Ghost implements GameElement
     {
         try
         {
-            return ImageIO.read(new File("./data/icons/antimage.png"));
+            return ImageIO.read(new File("./data/icons/ghost.png"));
         }
         catch (IOException e)
         {

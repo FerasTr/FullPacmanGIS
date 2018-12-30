@@ -1,5 +1,6 @@
 package ToServer;
 
+import Coordinates.Point3D;
 import GameElements.*;
 import Robot.Play;
 
@@ -46,11 +47,11 @@ final public class HandleServer
         System.out.println("Init Player Location should be set using the bounding box info");
     }
 
-    public static void setLocation()
+    public static void setLocation(Point3D point)
     {
         // 5) Set the "player" init location - should be a valid location
         // TODO should be in the GUI with pixel click
-        play.setInitLocation(32.1040, 35.2061);
+        play.setInitLocation(point.x(), point.y());
     }
 
     public static void startServer()
@@ -132,7 +133,7 @@ final public class HandleServer
         initGame("data/Ex4_OOP_example8.csv");
         playgroundInfo();
         gameData();
-        setLocation();
+        setLocation(new Point3D(32.1040, 35.2061, 0));
         startServer();
         play();
         gameStatistics();

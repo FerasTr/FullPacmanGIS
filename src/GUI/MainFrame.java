@@ -89,6 +89,10 @@ public class MainFrame extends JFrame
 
     private void AddPlayer()
     {
+        System.out.println("Adding player to the game...");
+        battleground.addPlayer(game);
+        insertPlayer.setEnabled(false);
+        optionsRun.setEnabled(true);
     }
 
     private void ClearGame()

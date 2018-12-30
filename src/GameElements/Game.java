@@ -93,6 +93,7 @@ public class Game
 
     public void clearGame()
     {
+        player = new Player();
         pacmanBots.clear();
         ghostBots.clear();
         fruits.clear();

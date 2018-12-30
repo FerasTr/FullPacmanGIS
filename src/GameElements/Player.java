@@ -70,7 +70,7 @@ public class Player implements GameElement
     {
         try
         {
-            return ImageIO.read(new File("./data/icons/invoker.png"));
+            return ImageIO.read(new File("./data/icons/player.png"));
         }
         catch (IOException e)
         {

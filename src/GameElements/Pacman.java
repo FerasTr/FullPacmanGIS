@@ -81,7 +81,7 @@ public class Pacman implements GameElement
     {
         try
         {
-            return ImageIO.read(new File("./data/icons/cm.png"));
+            return ImageIO.read(new File("./data/icons/pacman.png"));
         }
         catch (IOException e)
         {

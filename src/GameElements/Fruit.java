@@ -62,7 +62,7 @@ public class Fruit implements GameElement
     {
         try
         {
-            return ImageIO.read(new File("./data/icons/cour.png"));
+            return ImageIO.read(new File("./data/icons/fruit.png"));
         }
         catch (IOException e)
         {
