@@ -1,7 +1,6 @@
 package ToServer;
 
-import GameElements.Game;
-import GameElements.Pacman;
+import GameElements.*;
 import Robot.Play;
 
 import java.util.ArrayList;
@@ -21,14 +20,15 @@ final public class HandleServer
     }
 
     // Main methods \\
-    public static void initGame(String fileName)
+    public static Game initGame(String fileName)
     {
-        // 1) Create a "play" from a file.
+        // 1) Create the game variables
         play = new Play(fileName);
+        game = new Game();
         // 2) Set your ID
         play.setIDs(133713376);
-        // Build game from play object
-        game = new Game();
+        // Return game from play object
+        return game;
     }
 
     public static void playgroundInfo()
@@ -100,6 +100,7 @@ final public class HandleServer
         System.out.println("Parsing game data");
         ArrayList<String> board_data;
         board_data = play.getBoard();
+        game.clearGame();
         for (int i = 0; i < board_data.size(); i++)
         {
             String line = board_data.get(i);
@@ -111,15 +112,15 @@ final public class HandleServer
             }
             else if (lineElements[0].equals("F"))
             {
-
+                game.addFruit(new Fruit(lineElements));
             }
             else if (lineElements[0].equals("G"))
             {
-
+                game.addGhost(new Ghost(lineElements));
             }
             else if (lineElements[0].equals("B"))
             {
-
+                game.addBox(new Box(lineElements));
             }
         }
         System.out.println();
@@ -127,7 +128,7 @@ final public class HandleServer
 
     public static void main(String[] args)
     {
-        initGame("data/Ex4_OOP_example2.csv");
+        initGame("data/Ex4_OOP_example8.csv");
         playgroundInfo();
         gameData();
         setLocation();

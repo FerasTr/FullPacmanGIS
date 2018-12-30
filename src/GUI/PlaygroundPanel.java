@@ -1,11 +1,13 @@
 package GUI;
 
-import javax.imageio.ImageIO;
+import GameElements.Game;
+import GameElements.Pacman;
+import GameMap.Map;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * JPanel for displaying the game
@@ -13,24 +15,44 @@ import java.io.IOException;
 public class PlaygroundPanel extends JPanel
 {
     // Variables \\
-    private BufferedImage myImage = null;
-    private int imgW = myImage.getWidth(), imgH = myImage.getHeight();
+    private BufferedImage myImage;
+    private int imgW, imgH;
+    private Map map;
+    private Game game = null;
+    // Icons
 
-    public PlaygroundPanel()
+
+    public PlaygroundPanel(Map battlegroundMap)
     {
-        try
-        {
-            myImage = ImageIO.read(new File("./data/Ariel1.png"));
-        }
-        catch (IOException e)
-        {
-            System.out.println(e);
-        }
+        map = battlegroundMap;
+        myImage = map.getMapPath();
+        imgW = myImage.getWidth();
+        imgH = myImage.getHeight();
     }
 
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
         g.drawImage(myImage, 0, 0, this.getWidth(), this.getHeight(), this);
+        drawGame();
+    }
+
+    private void drawGame()
+    {
+        if (game != null)
+        {
+            // Display pacman bots
+            ArrayList<Pacman> pacBots = game.getPacmanBots();
+            for (Pacman pacBot : pacBots)
+            {
+
+            }
+        }
+    }
+
+    public void updateGame(Game gameSettings)
+    {
+        this.game = gameSettings;
+        repaint();
     }
 }

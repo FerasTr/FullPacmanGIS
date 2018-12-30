@@ -1,6 +1,7 @@
 package GUI;
 
 import GameElements.Game;
+import GameMap.Map;
 import ToServer.HandleServer;
 
 import javax.swing.*;
@@ -24,20 +25,25 @@ public class MainFrame extends JFrame
     private JMenuItem gameRun = new JMenuItem("Run");
     private JMenuItem gameOpen = new JMenuItem("Open");
     private JMenuItem gameClear = new JMenuItem("Clear");
-    private Game game;
+
+    private Game game = null;
+    private PlaygroundPanel battleground;
 
     /**
      * JFrame constructor, builds game menu bad and adds the playground panel to the frame
      */
-    public MainFrame()
+    public MainFrame(Map battlegroundMap)
     {
-        // Add the menu bar and its elements to the frame \\
+        // Battleground world settings
+        battleground = new PlaygroundPanel(battlegroundMap);
+        // Add the menu bar and its elements to the frame
         gameOptions.add(gameRun);
         gameOptions.add(gameOpen);
         gameOptions.add(gameClear);
         optionsBar.add(gameOptions);
-
-        // ActionListeners for menu buttons \\
+        // Add the panel to the JFrame
+        add(battleground);
+        // ActionListeners for menu buttons
         gameOpen.addActionListener(new ActionListener()
         {
             @Override
@@ -48,7 +54,7 @@ public class MainFrame extends JFrame
         });
 
         getContentPane().add(optionsBar, BorderLayout.NORTH);
-        // JFrame settings \\
+        // JFrame settings
         setSize(WIDTH, HEIGHT);
         setMinimumSize(new Dimension(300, 100));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,7 +75,8 @@ public class MainFrame extends JFrame
             String fileName = selectedFile.getPath();
             System.out.println("Selected file: " + fileName);
             System.out.println("Sending to server...");
-            HandleServer.initGame(fileName);
+            game = HandleServer.initGame(fileName);
+            battleground.updateGame(game);
         }
     }
 }

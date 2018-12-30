@@ -1,4 +1,4 @@
-package Map;
+package GameMap;
 
 
 import Coordinates.MyCoords;
@@ -7,7 +7,7 @@ import Coordinates.Point3D;
 import java.awt.image.BufferedImage;
 
 /**
- * Map class, this is the playground of the game.
+ * GameMap class, this is the playground of the game.
  */
 public class Map
 {
@@ -15,14 +15,13 @@ public class Map
     private Range mapRange;
 
     /**
-     * Map constructor, uses range class for calculations
+     * GameMap constructor, uses range class for calculations
      */
     public Map(BufferedImage base, Range mapRange)
     {
         map_path = base;
         this.mapRange = mapRange;
-
-    }
+q    }
 
     /**
      * Return the map

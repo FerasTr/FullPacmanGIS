@@ -1,4 +1,4 @@
-package Map;
+package GameMap;
 
 import Coordinates.MyCoords;
 import Coordinates.Point3D;

@@ -1,4 +1,4 @@
-package Map;
+package GameMap;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -26,7 +26,7 @@ final public class MapInit
 
         try
         {
-            ariel = ImageIO.read(new File("./Resources/maps/Ariel1.png"));
+            ariel = ImageIO.read(new File("./data/Ariel1.png"));
         }
         catch (IOException e)
         {

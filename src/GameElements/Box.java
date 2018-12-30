@@ -4,7 +4,7 @@ import Coordinates.Point3D;
 
 public class Box implements GameElement
 {
-    private static int ID = -1;
+    private int ID = -1;
     private Point3D min;
     private Point3D max;
 
@@ -12,10 +12,16 @@ public class Box implements GameElement
     {
         this.min = min;
         this.max = max;
-        ID++;
     }
 
-    public static int getID()
+    public Box(String[] lineElements)
+    {
+        ID = Integer.parseInt(lineElements[1]);
+        min = new Point3D(lineElements[2] + "," + lineElements[3] + ",0");
+        min = new Point3D(lineElements[4] + "," + lineElements[5] + ",0");
+    }
+
+    public int getID()
     {
         return ID;
     }

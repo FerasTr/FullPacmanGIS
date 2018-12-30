@@ -90,4 +90,12 @@ public class Game
     {
         obstecales.add(box);
     }
+
+    public void clearGame()
+    {
+        pacmanBots.clear();
+        ghostBots.clear();
+        fruits.clear();
+        obstecales.clear();
+    }
 }

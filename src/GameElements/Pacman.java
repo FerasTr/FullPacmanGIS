@@ -2,9 +2,15 @@ package GameElements;
 
 import Coordinates.Point3D;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 public class Pacman implements GameElement
 {
-    public int ID = -1;
+    public static final BufferedImage pac = initImg();
+    private int ID = -1;
     private Point3D location;
     private double speed;
     private double radius;
@@ -22,7 +28,7 @@ public class Pacman implements GameElement
     public Pacman(String[] lineElements)
     {
         ID = Integer.parseInt(lineElements[1]);
-        location = new Point3D(lineElements[2] + "," + lineElements[3] + "0");
+        location = new Point3D(lineElements[2] + "," + lineElements[3] + ",0");
         speed = Double.parseDouble(lineElements[5]);
         radius = Double.parseDouble(lineElements[6]);
     }
@@ -68,5 +74,18 @@ public class Pacman implements GameElement
     public void resetCounter()
     {
         ID = -1;
+    }
+
+    private static BufferedImage initImg()
+    {
+        try
+        {
+            return ImageIO.read(new File("./data/icons/pacman.png"));
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

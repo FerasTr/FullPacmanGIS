@@ -2,9 +2,15 @@ package GameElements;
 
 import Coordinates.Point3D;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 public class Ghost implements GameElement
 {
-    private static int ID = -1;
+    public static final BufferedImage ghost = initImg();
+    private int ID = -1;
     private Point3D location;
     private double speed;
     private double radius;
@@ -17,7 +23,15 @@ public class Ghost implements GameElement
         ID++;
     }
 
-    public static int getID()
+    public Ghost(String[] lineElements)
+    {
+        ID = Integer.parseInt(lineElements[1]);
+        location = new Point3D(lineElements[2] + "," + lineElements[3] + ",0");
+        speed = Double.parseDouble(lineElements[5]);
+        radius = Double.parseDouble(lineElements[6]);
+    }
+
+    public int getID()
     {
         return ID;
     }
@@ -50,5 +64,18 @@ public class Ghost implements GameElement
     public void setRadius(double radius)
     {
         this.radius = radius;
+    }
+
+    private static BufferedImage initImg()
+    {
+        try
+        {
+            return ImageIO.read(new File("./data/icons/ghost.png"));
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
