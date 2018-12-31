@@ -22,6 +22,16 @@ public class Player implements GameElement
         this.radius = radius;
     }
 
+    public Player(String[] lineElements)
+    {
+        if (!(lineElements[2].equals("0.0") && lineElements[3].equals("0.0")))
+        {
+            location = new Point3D(lineElements[2] + "," + lineElements[3] + ",0");
+            speed = Double.parseDouble(lineElements[5]);
+            radius = Double.parseDouble(lineElements[6]);
+        }
+    }
+
     public Player()
     {
         this.location = null;

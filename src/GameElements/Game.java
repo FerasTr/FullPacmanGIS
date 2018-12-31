@@ -9,6 +9,8 @@ public class Game
     private ArrayList<GameElement> ghostBots;
     private ArrayList<GameElement> fruits;
     private ArrayList<Box> obstecales;
+    // TODO implement a completed check in the gui the displays the stats for the current "map"
+    private boolean completed = false;
 
     public Game()
     {
@@ -70,6 +72,21 @@ public class Game
         this.obstecales = obstecales;
     }
 
+    public boolean isCompleted()
+    {
+        return completed;
+    }
+
+    public void setCompleted()
+    {
+        this.completed = true;
+    }
+
+    public void setNotCompleted()
+    {
+        this.completed = false;
+    }
+
     // Methods \\
     public void addPacman(Pacman pac)
     {
@@ -99,4 +116,6 @@ public class Game
         fruits.clear();
         obstecales.clear();
     }
+
+
 }

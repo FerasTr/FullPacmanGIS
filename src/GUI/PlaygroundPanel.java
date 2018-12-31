@@ -123,7 +123,7 @@ public class PlaygroundPanel extends JPanel
         {
             tempIcon = rescaleIcon(ghostIcon);
         }
-        else if(obj instanceof  Player)
+        else if (obj instanceof Player)
         {
             tempIcon = rescaleIcon(playerIcon);
         }
@@ -134,6 +134,7 @@ public class PlaygroundPanel extends JPanel
     // Methods \\
     public void updateGame(Game gameSettings)
     {
+        // Linking both games, should be used once
         this.gameSettings = gameSettings;
         repaint();
     }
@@ -184,21 +185,22 @@ public class PlaygroundPanel extends JPanel
 
     }
 
-    public void addPlayer(Game game)
+    public void addPlayer()
     {
         mouseClick = new MouseListener()
         {
             @Override
             public void mouseClicked(MouseEvent e)
             {
-                System.out.println("asd");
                 Point3D clickLocation = new Point3D(e.getX(), e.getY(), 0);
                 Point3D p = pointBeforeResize(clickLocation);
                 Point3D inGPS = map.pixleToGPS(p);
                 HandleServer.setLocation(inGPS);
                 Player toAdd = new Player(inGPS, 20, 1);
-                game.setPlayer(toAdd);
-                System.out.println("PLAYER ADDED " + " --> PIXEL: [" + (int) p.x() + "," + (int) p.y() + "] GIS: [" + inGPS.x() + "," + inGPS.y() + "]");
+                gameSettings.setPlayer(toAdd);
+                System.out.println();
+                System.out.println("PLAYER ADDED " + " ==> PIXEL: [" + p.ix() + "," + p.iy() + "] GIS: [" + inGPS.x() + "," + inGPS.y() + "]");
+                System.out.println();
                 repaint();
                 removeMouseListener(mouseClick);
             }
@@ -228,5 +230,53 @@ public class PlaygroundPanel extends JPanel
             }
         };
         this.addMouseListener(mouseClick);
+    }
+
+    public void manualGame()
+    {
+        mouseClick = new MouseListener()
+        {
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                Point3D clickLocation = new Point3D(e.getX(), e.getY(), 0);
+                Point3D p = pointBeforeResize(clickLocation);
+                Point3D inGPS = map.pixleToGPS(p);
+                Player player = gameSettings.getPlayer();
+                double angle = player.angelToMove(inGPS);
+                gameSettings = HandleServer.play(angle);
+                repaint();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e)
+            {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e)
+            {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e)
+            {
+
+            }
+        };
+        this.addMouseListener(mouseClick);
+    }
+
+    public void stopGame()
+    {
+        removeMouseListener(mouseClick);
     }
 }

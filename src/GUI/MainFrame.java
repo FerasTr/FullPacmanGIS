@@ -23,6 +23,7 @@ public class MainFrame extends JFrame
     // Game options \\
     private JMenu gameOptions = new JMenu("Options");
     private JMenuItem optionsRun = new JMenuItem("Run");
+    private JMenuItem optionsStop = new JMenuItem("Stop");
     private JMenuItem optionsOpen = new JMenuItem("Open");
     private JMenuItem optionsClear = new JMenuItem("Clear");
     // Game insert \\
@@ -41,6 +42,7 @@ public class MainFrame extends JFrame
         battleground = new PlaygroundPanel(battlegroundMap);
         // Add the menu bar and its elements to the frame
         gameOptions.add(optionsRun);
+        gameOptions.add(optionsStop);
         gameOptions.add(optionsOpen);
         gameOptions.add(optionsClear);
         gameBar.add(gameOptions);
@@ -49,9 +51,26 @@ public class MainFrame extends JFrame
         // Add the panel to the JFrame
         add(battleground);
         // Button options
+        optionsStop.setEnabled(false);
         optionsRun.setEnabled(false);
         insertPlayer.setEnabled(false);
 
+        optionsRun.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                runGame();
+            }
+        });
+        optionsStop.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                stopGame();
+            }
+        });
         optionsOpen.addActionListener(new ActionListener()
         {
             @Override
@@ -87,10 +106,26 @@ public class MainFrame extends JFrame
         setVisible(true);
     }
 
+    private void stopGame()
+    {
+        HandleServer.stopServer();
+        battleground.stopGame();
+        optionsRun.setEnabled(true);
+        optionsStop.setEnabled(false);
+    }
+
+    private void runGame()
+    {
+        HandleServer.startServer();
+        optionsRun.setEnabled(false);
+        optionsStop.setEnabled(true);
+        battleground.manualGame();
+    }
+
     private void AddPlayer()
     {
         System.out.println("Adding player to the game...");
-        battleground.addPlayer(game);
+        battleground.addPlayer();
         insertPlayer.setEnabled(false);
         optionsRun.setEnabled(true);
     }
@@ -120,11 +155,9 @@ public class MainFrame extends JFrame
             selectedFile = fileChooser.getSelectedFile();
             String fileName = selectedFile.getPath();
             System.out.println("Selected file: " + fileName);
-            System.out.println("Sending to server...");
             game = HandleServer.initGame(fileName);
             battleground.updateGame(game);
             insertPlayer.setEnabled(true);
         }
-        System.out.println("Please insert a player to run the game...");
     }
 }
