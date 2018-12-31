@@ -29,6 +29,7 @@ final public class HandleServer
         play = new Play(fileName);
         System.out.println("Using game: " + fileName);
         game = new Game();
+        game.setFileName(fileName);
         // 2) Set your ID
         long id = 133713376;
         play.setIDs(id);

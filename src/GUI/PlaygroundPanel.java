@@ -275,7 +275,7 @@ public class PlaygroundPanel extends JPanel
         this.addMouseListener(mouseClick);
     }
 
-    public void stopGame()
+    public void stopMouseListen()
     {
         removeMouseListener(mouseClick);
     }

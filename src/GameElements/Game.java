@@ -11,6 +11,7 @@ public class Game
     private ArrayList<Box> obstecales;
     // TODO implement a completed check in the gui the displays the stats for the current "map"
     private boolean completed = false;
+    private String fileName;
 
     public Game()
     {
@@ -87,6 +88,16 @@ public class Game
         this.completed = false;
     }
 
+    public String getFileName()
+    {
+        return fileName;
+    }
+
+    public void setFileName(String fileName)
+    {
+        this.fileName = fileName;
+    }
+
     // Methods \\
     public void addPacman(Pacman pac)
     {
@@ -116,6 +127,4 @@ public class Game
         fruits.clear();
         obstecales.clear();
     }
-
-
 }

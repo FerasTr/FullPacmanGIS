@@ -20,10 +20,13 @@ public class MainFrame extends JFrame
     private final int HEIGHT = 642;
     // Menu Bar \\
     private JMenuBar gameBar = new JMenuBar();
+    // Game control \\
+    private JMenu gameCommand = new JMenu("Commands");
+    private JMenuItem commandMan = new JMenuItem("Manual");
+    private JMenuItem commandAuto = new JMenuItem("Auto");
+    private JMenuItem commandReset = new JMenuItem("Reset");
     // Game options \\
     private JMenu gameOptions = new JMenu("Options");
-    private JMenuItem optionsRun = new JMenuItem("Run");
-    private JMenuItem optionsStop = new JMenuItem("Stop");
     private JMenuItem optionsOpen = new JMenuItem("Open");
     private JMenuItem optionsClear = new JMenuItem("Clear");
     // Game insert \\
@@ -41,8 +44,10 @@ public class MainFrame extends JFrame
         // Battleground world settings
         battleground = new PlaygroundPanel(battlegroundMap);
         // Add the menu bar and its elements to the frame
-        gameOptions.add(optionsRun);
-        gameOptions.add(optionsStop);
+        gameCommand.add(commandMan);
+        gameCommand.add(commandAuto);
+        gameCommand.add(commandReset);
+        gameBar.add(gameCommand);
         gameOptions.add(optionsOpen);
         gameOptions.add(optionsClear);
         gameBar.add(gameOptions);
@@ -51,24 +56,25 @@ public class MainFrame extends JFrame
         // Add the panel to the JFrame
         add(battleground);
         // Button options
-        optionsStop.setEnabled(false);
-        optionsRun.setEnabled(false);
+        commandMan.setEnabled(false);
+        commandAuto.setEnabled(false);
+        commandReset.setEnabled(false);
         insertPlayer.setEnabled(false);
 
-        optionsRun.addActionListener(new ActionListener()
+        commandMan.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                runGame();
+                runManual();
             }
         });
-        optionsStop.addActionListener(new ActionListener()
+        commandReset.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                stopGame();
+                resetGame();
             }
         });
         optionsOpen.addActionListener(new ActionListener()
@@ -106,19 +112,25 @@ public class MainFrame extends JFrame
         setVisible(true);
     }
 
-    private void stopGame()
+    private void resetGame()
     {
+        battleground.stopMouseListen();
         HandleServer.stopServer();
-        battleground.stopGame();
-        optionsRun.setEnabled(true);
-        optionsStop.setEnabled(false);
+        game.clearGame();
+        game = HandleServer.initGame(game.getFileName());
+        battleground.updateGame(game);
+        commandMan.setEnabled(false);
+        commandAuto.setEnabled(false);
+        commandReset.setEnabled(false);
+        insertPlayer.setEnabled(true);
     }
 
-    private void runGame()
+    private void runManual()
     {
         HandleServer.startServer();
-        optionsRun.setEnabled(false);
-        optionsStop.setEnabled(true);
+        commandMan.setEnabled(false);
+        commandAuto.setEnabled(false);
+        commandReset.setEnabled(true);
         battleground.manualGame();
     }
 
@@ -127,15 +139,21 @@ public class MainFrame extends JFrame
         System.out.println("Adding player to the game...");
         battleground.addPlayer();
         insertPlayer.setEnabled(false);
-        optionsRun.setEnabled(true);
+        commandMan.setEnabled(true);
+        commandAuto.setEnabled(true);
     }
 
     private void ClearGame()
     {
-        game.clearGame();
-        battleground.updateGame(game);
-        optionsRun.setEnabled(false);
-        insertPlayer.setEnabled(false);
+        if (game != null)
+        {
+            game.clearGame();
+            battleground.updateGame(game);
+            commandMan.setEnabled(false);
+            commandAuto.setEnabled(false);
+            commandReset.setEnabled(false);
+            insertPlayer.setEnabled(false);
+        }
     }
 
     /**
