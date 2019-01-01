@@ -39,6 +39,13 @@ public class Player implements GameElement
         this.radius = 0;
     }
 
+    public Player(Player player)
+    {
+        this.location = new Point3D(player.getLocation());
+        this.speed = player.getSpeed();
+        this.radius = player.getRadius();
+    }
+
     public Point3D getLocation()
     {
         return location;

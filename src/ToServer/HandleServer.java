@@ -80,27 +80,6 @@ final public class HandleServer
         System.out.println();
     }
 
-    public static void playOld()
-    {
-        // 7) "Play" as long as there are "fruits" and time
-        int i = 0;
-        while (play.isRuning() && i < 10)
-        {
-            i++;
-
-            // 7.1) this is the main command to the player (on the server side)+
-            // TODO calculate the azimuth of the mouse click and the current position, should be in GUI
-            play.rotate(36 * i);
-            System.out.println("***** " + 36 * i + "******");
-
-            // 7.2) get the current score of the game
-            gameStatistics();
-            // 7.3) get the game-board current state
-            gameData();
-        }
-        stopServer();
-    }
-
     public static Game play(Double angle)
     {
         // 7) "Play" as long as there are "fruits" and time
@@ -181,16 +160,5 @@ final public class HandleServer
                 game.setPlayer(new Player(lineElements));
             }
         }
-    }
-
-    public static void main(String[] args)
-    {
-        initGame("data/Ex4_OOP_example8.csv");
-        playgroundInfo();
-        gameData();
-        setLocation(new Point3D(32.1040, 35.2061, 0));
-        startServer();
-        playOld();
-        gameStatistics();
     }
 }

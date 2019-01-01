@@ -15,10 +15,10 @@ public class Fruit implements GameElement
     private double weight;
 
     // Constructor \\
-    public Fruit(double lat, double lon, double alt, double weight)
+
+    public Fruit(Point3D location, double weight)
     {
-        String location_string = "w(" + lat + "," + lon + "," + alt + ")";
-        this.location = new Point3D(location_string);
+        this.location = location;
         this.weight = weight;
     }
 
@@ -27,6 +27,13 @@ public class Fruit implements GameElement
         ID = Integer.parseInt(lineElements[1]);
         location = new Point3D(lineElements[2] + "," + lineElements[3] + ",0");
         weight = Double.parseDouble(lineElements[5]);
+    }
+
+    public Fruit(Fruit fruit)
+    {
+        this.ID = fruit.getID();
+        this.location = new Point3D(fruit.getLocation());
+        this.weight = fruit.getWeight();
     }
 
     // Getters & Setters \\

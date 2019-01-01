@@ -22,6 +22,13 @@ public class Game
         obstecales = new ArrayList<>();
     }
 
+    public Game(Game game)
+    {
+        this.player = new Player(game.getPlayer());
+        this.fruits = game.CopyFruits();
+        this.pacmanBots = game.CopyPacmans();
+        this.obstecales = game.getObstecales();
+    }
 
     public Player getPlayer()
     {
@@ -126,5 +133,25 @@ public class Game
         ghostBots.clear();
         fruits.clear();
         obstecales.clear();
+    }
+
+    public ArrayList<GameElement> CopyFruits()
+    {
+        ArrayList<GameElement> temp = new ArrayList<>();
+        for (GameElement fruit : fruits)
+        {
+            temp.add(new Fruit((Fruit) fruit));
+        }
+        return temp;
+    }
+
+    public ArrayList<GameElement> CopyPacmans()
+    {
+        ArrayList<GameElement> temp = new ArrayList<>();
+        for (GameElement pac : pacmanBots)
+        {
+            temp.add(new Pacman((Pacman) pac));
+        }
+        return temp;
     }
 }

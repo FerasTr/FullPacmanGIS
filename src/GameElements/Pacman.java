@@ -33,6 +33,15 @@ public class Pacman implements GameElement
         radius = Double.parseDouble(lineElements[6]);
     }
 
+    public Pacman(Pacman pac)
+    {
+        this.ID = pac.getID();
+        this.location = new Point3D(pac.getLocation());
+        this.speed = pac.getSpeed();
+        this.radius = pac.getRadius();
+        this.speed = pac.getScore();
+    }
+
     // Getters & Setters \\
     public int getID()
     {
