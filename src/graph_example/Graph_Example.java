@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import graph.Graph;
 import graph.Graph_Algo;
 import graph.Node;
-import graph.Point3D;
+import Coordinates.*;
 
 /**
  * This main class demonstrate a use of Dijkstra algorithm for finding the shortest path
@@ -52,7 +52,6 @@ public class Graph_Example
 
         G.addEdge("9", "10", pp[9].distance2D(pp[10]));
         G.addEdge("6", "9", pp[6].distance2D(pp[9]));
-        G.addEdge("7", "10", pp[7].distance2D(pp[10]));
 
         G.addEdge("7", "8", pp[7].distance2D(pp[8]));
         G.addEdge("8", "13", pp[8].distance2D(pp[13]));

@@ -20,6 +20,7 @@ final public class AutoMode
     {
         toRun = game;
         Graph graph = new Graph();
+        graph.ResetGraph();
         toRun.setGraph(graph);
         PrepareGraph();
         Graph_Algo.dijkstra(graph, "player");

@@ -59,7 +59,7 @@ public class RealTime implements Runnable
                     try
                     {
                         simulationBoard.repaint();
-                        Thread.sleep(16);
+                        Thread.sleep(1000);
                     }
                     catch (InterruptedException e)
                     {
