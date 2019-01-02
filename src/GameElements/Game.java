@@ -1,5 +1,7 @@
 package GameElements;
 
+import graph.Graph;
+
 import java.util.ArrayList;
 
 public class Game
@@ -12,6 +14,8 @@ public class Game
     // TODO implement a completed check in the gui the displays the stats for the current "map"
     private boolean completed = false;
     private String fileName;
+
+    Graph graph = new Graph();
 
     public Game()
     {
@@ -124,6 +128,16 @@ public class Game
     public void addBox(Box box)
     {
         obstecales.add(box);
+    }
+
+    public Graph getGraph()
+    {
+        return graph;
+    }
+
+    public void setGraph(Graph graph)
+    {
+        this.graph = graph;
     }
 
     public void clearGame()

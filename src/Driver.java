@@ -1,21 +1,18 @@
-import Algorithm.AutoMode;
+import Coordinates.MyCoords;
 import Coordinates.Point3D;
 import GUI.MainFrame;
-import GameElements.Fruit;
-import GameElements.Player;
 import GameMap.MapInit;
-import GameMap.Path;
 
 public class Driver
 {
     // TODO IMPLEMENT STATS BETWEEN PLAYERS
     public static void main(String[] args)
     {
-        Player p = new Player(new Point3D(32.102478, 35.207439, 0), 20, 1);
-        Fruit f = new Fruit(new Point3D(32.104672, 35.207905, 0), 1);
-        Path path = AutoMode.GetPath(f, p);
-        String s = path.toString();
-        System.out.println(s);
-        //MainFrame gui = new MainFrame(MapInit.ArielMap());
+        MainFrame gui = new MainFrame(MapInit.ArielMap());
+
+       /* Point3D p = new Point3D(32.103869531873436, 35.20774851040772);
+        Point3D p2 = new Point3D(32.103875580891916, 35.20776245011847);
+        System.out.println(MyCoords.distance3d(p,p2));*/
+
     }
 }

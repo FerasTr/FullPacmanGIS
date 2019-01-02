@@ -46,9 +46,16 @@ public class Player implements GameElement
         this.radius = player.getRadius();
     }
 
+
     public Point3D getLocation()
     {
         return location;
+    }
+
+    @Override
+    public int getID()
+    {
+        return 0;
     }
 
     public void setLocation(Point3D location)

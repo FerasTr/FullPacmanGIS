@@ -43,6 +43,7 @@ public class Pacman implements GameElement
     }
 
     // Getters & Setters \\
+    @Override
     public int getID()
     {
         return ID;

@@ -69,6 +69,15 @@ public class MainFrame extends JFrame
                 runManual();
             }
         });
+
+        commandAuto.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                runAuto();
+            }
+        });
         commandReset.addActionListener(new ActionListener()
         {
             @Override
@@ -112,11 +121,20 @@ public class MainFrame extends JFrame
         setVisible(true);
     }
 
+    private void runAuto()
+    {
+        HandleServer.startServer();
+        commandMan.setEnabled(false);
+        commandAuto.setEnabled(false);
+        commandReset.setEnabled(true);
+        battleground.autoGame();
+    }
+
     private void resetGame()
     {
+        game.clearGame();
         battleground.stopMouseListen();
         HandleServer.stopServer();
-        game.clearGame();
         game = HandleServer.initGame(game.getFileName());
         battleground.updateGame(game);
         commandMan.setEnabled(false);
@@ -140,7 +158,7 @@ public class MainFrame extends JFrame
         battleground.addPlayer();
         insertPlayer.setEnabled(false);
         commandMan.setEnabled(true);
-        commandAuto.setEnabled(true);
+        commandAuto.setEnabled(false);
     }
 
     private void ClearGame()
@@ -176,6 +194,7 @@ public class MainFrame extends JFrame
             game = HandleServer.initGame(fileName);
             battleground.updateGame(game);
             insertPlayer.setEnabled(true);
+            commandAuto.setEnabled(true);
         }
     }
 }

@@ -1,8 +1,9 @@
 package Algorithm;
 
+import Coordinates.MyCoords;
+import Coordinates.Point3D;
 import GameElements.*;
-import Coordinates.*;
-import GameMap.Path;
+import graph.*;
 
 import java.util.ArrayList;
 
@@ -15,57 +16,81 @@ final public class AutoMode
     {
     }
 
-    // Find closest fruit
-    public static int CloseFruit(Player p)
+    public static void Algorithm(Game game)
     {
-        int targetIndex = -1;
-        ArrayList<GameElement> targets = toRun.getFruits();
-        if (targets.size() > 0)
-        {
-            targetIndex = 0;
-            double minDistance = MyCoords.distance3d(p.getLocation(), targets.get(targetIndex).getLocation());
+        toRun = game;
+        Graph graph = new Graph();
+        toRun.setGraph(graph);
+        PrepareGraph();
+        Graph_Algo.dijkstra(graph, "player");
+    }
 
-            for (int i = 1; i < targets.size(); ++i)
+    private static void PrepareGraph()
+    {
+        if (toRun.getObstecales().size() == 0)
+        {
+            GraphNoBox();
+        }
+        else
+        {
+            GraphWithBox();
+        }
+    }
+
+    private static void GraphWithBox()
+    {
+    }
+
+    private static void GraphNoBox()
+    {
+        // Place player
+        ArrayList<GameElement> targets = toRun.getFruits();
+        if (toRun.getPlayer().getLocation() == null)
+        {
+            Point3D p = targets.get(0).getLocation();
+            System.out.println("DEBUG");
+            Player toAdd = new Player(p, 20, 1);
+            toRun.setPlayer(toAdd);
+        }
+        toRun.getGraph().add(new Node("player"));
+
+        // ADD NODES AND EDGES
+
+        for (int i = 0; i < targets.size(); i++)
+        {
+            String name1 = "fruit_" + targets.get(i).getID();
+            Node node1 = new Node(name1);
+            if (!toRun.getGraph().exist(node1))
             {
-                double currentDistance = MyCoords.distance3d(p.getLocation(), targets.get(targetIndex).getLocation());
-                if (currentDistance < minDistance)
+                toRun.getGraph().add(node1);
+            }
+            Point3D location1 = targets.get(i).getLocation();
+            for (int j = 0; j < targets.size(); j++)
+            {
+                String name2 = "fruit_" + targets.get(j).getID();
+                Point3D location2 = targets.get(j).getLocation();
+                if (!name1.equals(name2))
                 {
-                    minDistance = currentDistance;
-                    targetIndex = i;
+                    Node node2 = new Node(name2);
+                    if (!toRun.getGraph().exist(node2))
+                    {
+                        toRun.getGraph().add(node2);
+                    }
+                    double distance = MyCoords.distance3d(location1, location2);
+                    toRun.getGraph().addEdge(name1, name2, distance);
                 }
             }
         }
-        return targetIndex;
+
+        // ADD EDGES TO SOURCE
+        for (int i = 0; i < targets.size(); i++)
+        {
+            double distance = MyCoords.distance3d(toRun.getPlayer().getLocation(), targets.get(i).getLocation());
+            String name = "fruit_" + targets.get(i).getID();
+            toRun.getGraph().addEdge("player", name, distance);
+        }
+        System.out.println(toRun.getGraph().toString());
     }
 
-    public static void Algorithm(Game game)
-    {
-        toRun = new Game(game);
-        Player player = toRun.getPlayer();
-        while (!toRun.getFruits().isEmpty())
-        {
-            Fruit target = (Fruit) toRun.getFruits().get(CloseFruit(player));
-            Path path = GetPath(target, player);
-        }
-    }
 
-    public static Path GetPath(Fruit target, Player player)
-    {
-        Path path = new Path();
-        Point3D targetLocation = target.getLocation();
-        Point3D playerLocation = new Point3D(player.getLocation());
-        path.add(playerLocation);
-        while (MyCoords.distance3d(playerLocation, targetLocation) > 3)
-        {
-            double a = MyCoords.azimuth_elevation_dist(player.getLocation(), targetLocation)[0];
-            a = MyCoords.deg2Rad(a);
-            Point3D vec = new Point3D(Math.cos(a) * 2, Math.sin(a) * 2, 0);
-            Point3D point = MyCoords.add(playerLocation, vec);
-            System.out.println(point.toFile());
-            path.add(point);
-            playerLocation = new Point3D(point);
-        }
-        path.add(targetLocation);
-        return path;
-    }
 }

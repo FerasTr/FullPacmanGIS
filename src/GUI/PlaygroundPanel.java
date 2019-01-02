@@ -1,5 +1,6 @@
 package GUI;
 
+import Algorithm.AutoMode;
 import Coordinates.Point3D;
 import GameElements.*;
 import GameElements.Box;
@@ -46,6 +47,11 @@ public class PlaygroundPanel extends JPanel
         super.paintComponent(g);
         g.drawImage(myImage, 0, 0, this.getWidth(), this.getHeight(), this);
         drawGame(g);
+    }
+
+    public Game getGameSettings()
+    {
+        return gameSettings;
     }
 
     private void drawGame(Graphics g)
@@ -278,5 +284,19 @@ public class PlaygroundPanel extends JPanel
     public void stopMouseListen()
     {
         removeMouseListener(mouseClick);
+    }
+
+    public void autoGame()
+    {
+        AutoMode.Algorithm(gameSettings);
+        HandleServer.setLocation(gameSettings.getPlayer().getLocation());
+        repaint();
+        simulateRun();
+    }
+    private void simulateRun()
+    {
+        RealTime simulation = new RealTime(this);
+        Thread thread = new Thread(simulation);
+        thread.start();
     }
 }
