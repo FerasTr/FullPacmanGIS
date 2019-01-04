@@ -13,6 +13,7 @@ public class Fruit implements GameElement
     public int ID = -1;
     private Point3D location;
     private double weight;
+    String name;
 
     // Constructor \\
 
@@ -27,6 +28,7 @@ public class Fruit implements GameElement
         ID = Integer.parseInt(lineElements[1]);
         location = new Point3D(lineElements[2] + "," + lineElements[3] + ",0");
         weight = Double.parseDouble(lineElements[5]);
+        name = "fruit_" + this.ID;
     }
 
     public Fruit(Fruit fruit)
@@ -34,6 +36,17 @@ public class Fruit implements GameElement
         this.ID = fruit.getID();
         this.location = new Point3D(fruit.getLocation());
         this.weight = fruit.getWeight();
+        this.name = fruit.getName();
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
     // Getters & Setters \\
@@ -77,5 +90,14 @@ public class Fruit implements GameElement
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean equal(Fruit fruit)
+    {
+        if (this.getID() == fruit.getID())
+        {
+            return true;
+        }
+        return false;
     }
 }

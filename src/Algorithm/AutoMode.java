@@ -6,7 +6,8 @@ import GameElements.*;
 import ToServer.HandleServer;
 import graph.*;
 
-import java.util.ArrayList;
+import java.util.Vector;
+
 
 //TODO implement the auto mode
 final public class AutoMode
@@ -25,7 +26,7 @@ final public class AutoMode
         toRun.setGraph(graph);
         PrepareGraph();
         Graph_Algo.dijkstra(graph, "player");
-        System.out.println(toRun.getGraph().toString());
+        //System.out.println(toRun.getGraph().toString());
     }
 
     private static void PrepareGraph()
@@ -47,14 +48,19 @@ final public class AutoMode
     private static void GraphNoBox()
     {
         // Place player
-        ArrayList<GameElement> targets = toRun.getFruits();
+        Vector<GameElement> targets = toRun.getFruits();
         // TODO implement a better location picker
         if (toRun.getPlayer().getLocation() == null)
         {
+            System.out.println("Adding player to the game...");
             Point3D p = toRun.getPacmanBots().get(0).getLocation();
-            Player toAdd = new Player(p, 20, 1);
+            System.out.println();
+            System.out.println("PLAYER ADDED " + " ==> GIS: [" + p.x() + "," + p.y() + "]");
+            System.out.println();
             HandleServer.setLocation(p);
+            Player toAdd = new Player(p, 20, 1);
             toRun.setPlayer(toAdd);
+            HandleServer.startServer();
         }
         toRun.getGraph().add(new Node("player"));
 

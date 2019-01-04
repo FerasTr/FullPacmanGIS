@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * JPanel for displaying the gameSettings
@@ -60,14 +60,14 @@ public class PlaygroundPanel extends JPanel
         {
             // Display gameSettings elements \\
             // Game bots
-            ArrayList<GameElement> objects = gameSettings.getPacmanBots();
+            Vector<GameElement> objects = gameSettings.getPacmanBots();
             drawIcons(g, objects);
             objects = gameSettings.getFruits();
             drawIcons(g, objects);
             objects = gameSettings.getGhostBots();
             drawIcons(g, objects);
             // Game box
-            ArrayList<Box> obst = gameSettings.getObstecales();
+            Vector<Box> obst = gameSettings.getObstecales();
             drawBoxes(g, obst);
             // Player
             Player player = gameSettings.getPlayer();
@@ -78,7 +78,7 @@ public class PlaygroundPanel extends JPanel
         }
     }
 
-    private void drawIcons(Graphics g, ArrayList<GameElement> objects)
+    private void drawIcons(Graphics g, Vector<GameElement> objects)
     {
         if (objects.size() != 0)
         {
@@ -90,7 +90,7 @@ public class PlaygroundPanel extends JPanel
         }
     }
 
-    private void drawBoxes(Graphics g, ArrayList<Box> obst)
+    private void drawBoxes(Graphics g, Vector<Box> obst)
     {
         if (obst.size() != 0)
         {
@@ -289,12 +289,10 @@ public class PlaygroundPanel extends JPanel
     public void autoGame()
     {
         AutoMode.Algorithm(gameSettings);
-        System.out.println();
-        System.out.println("PLAYER ADDED " + " ==> GIS: [" + gameSettings.getPlayer().getLocation().x() + "," + gameSettings.getPlayer().getLocation().y() + "]");
-        System.out.println();
         repaint();
         simulateRun();
     }
+
     private void simulateRun()
     {
         RealTime simulation = new RealTime(this);

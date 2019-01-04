@@ -2,15 +2,15 @@ package GameElements;
 
 import graph.Graph;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 public class Game
 {
     private Player player;
-    private ArrayList<GameElement> pacmanBots;
-    private ArrayList<GameElement> ghostBots;
-    private ArrayList<GameElement> fruits;
-    private ArrayList<Box> obstecales;
+    private Vector<GameElement> pacmanBots;
+    private Vector<GameElement> ghostBots;
+    private Vector<GameElement> fruits;
+    private Vector<Box> obstecales;
     // TODO implement a completed check in the gui the displays the stats for the current "map"
     private boolean completed = false;
     private String fileName;
@@ -20,10 +20,10 @@ public class Game
     public Game()
     {
         player = new Player();
-        pacmanBots = new ArrayList<>();
-        ghostBots = new ArrayList<>();
-        fruits = new ArrayList<>();
-        obstecales = new ArrayList<>();
+        pacmanBots = new Vector<>();
+        ghostBots = new Vector<>();
+        fruits = new Vector<>();
+        obstecales = new Vector<>();
     }
 
     public Game(Game game)
@@ -44,42 +44,42 @@ public class Game
         this.player = player;
     }
 
-    public ArrayList<GameElement> getPacmanBots()
+    public Vector<GameElement> getPacmanBots()
     {
         return pacmanBots;
     }
 
-    public void setPacmanBots(ArrayList<GameElement> pacmanBots)
+    public void setPacmanBots(Vector<GameElement> pacmanBots)
     {
         this.pacmanBots = pacmanBots;
     }
 
-    public ArrayList<GameElement> getGhostBots()
+    public Vector<GameElement> getGhostBots()
     {
         return ghostBots;
     }
 
-    public void setGhostBots(ArrayList<GameElement> ghostBots)
+    public void setGhostBots(Vector<GameElement> ghostBots)
     {
         this.ghostBots = ghostBots;
     }
 
-    public ArrayList<GameElement> getFruits()
+    public Vector<GameElement> getFruits()
     {
         return fruits;
     }
 
-    public void setFruits(ArrayList<GameElement> fruits)
+    public void setFruits(Vector<GameElement> fruits)
     {
         this.fruits = fruits;
     }
 
-    public ArrayList<Box> getObstecales()
+    public Vector<Box> getObstecales()
     {
         return obstecales;
     }
 
-    public void setObstecales(ArrayList<Box> obstecales)
+    public void setObstecales(Vector<Box> obstecales)
     {
         this.obstecales = obstecales;
     }
@@ -149,9 +149,9 @@ public class Game
         obstecales.clear();
     }
 
-    public ArrayList<GameElement> CopyFruits()
+    public Vector<GameElement> CopyFruits()
     {
-        ArrayList<GameElement> temp = new ArrayList<>();
+        Vector<GameElement> temp = new Vector<>();
         for (GameElement fruit : fruits)
         {
             temp.add(new Fruit((Fruit) fruit));
@@ -159,9 +159,9 @@ public class Game
         return temp;
     }
 
-    public ArrayList<GameElement> CopyPacmans()
+    public Vector<GameElement> CopyPacmans()
     {
-        ArrayList<GameElement> temp = new ArrayList<>();
+        Vector<GameElement> temp = new Vector<>();
         for (GameElement pac : pacmanBots)
         {
             temp.add(new Pacman((Pacman) pac));

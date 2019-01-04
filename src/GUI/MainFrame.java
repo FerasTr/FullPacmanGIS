@@ -123,7 +123,6 @@ public class MainFrame extends JFrame
 
     private void runAuto()
     {
-        HandleServer.startServer();
         commandMan.setEnabled(false);
         commandAuto.setEnabled(false);
         commandReset.setEnabled(true);
