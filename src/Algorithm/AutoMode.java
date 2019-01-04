@@ -3,6 +3,7 @@ package Algorithm;
 import Coordinates.MyCoords;
 import Coordinates.Point3D;
 import GameElements.*;
+import ToServer.HandleServer;
 import graph.*;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ final public class AutoMode
         toRun.setGraph(graph);
         PrepareGraph();
         Graph_Algo.dijkstra(graph, "player");
+        System.out.println(toRun.getGraph().toString());
     }
 
     private static void PrepareGraph()
@@ -46,11 +48,12 @@ final public class AutoMode
     {
         // Place player
         ArrayList<GameElement> targets = toRun.getFruits();
+        // TODO implement a better location picker
         if (toRun.getPlayer().getLocation() == null)
         {
-            Point3D p = targets.get(0).getLocation();
-            System.out.println("DEBUG");
+            Point3D p = toRun.getPacmanBots().get(0).getLocation();
             Player toAdd = new Player(p, 20, 1);
+            HandleServer.setLocation(p);
             toRun.setPlayer(toAdd);
         }
         toRun.getGraph().add(new Node("player"));
@@ -90,8 +93,5 @@ final public class AutoMode
             String name = "fruit_" + targets.get(i).getID();
             toRun.getGraph().addEdge("player", name, distance);
         }
-        System.out.println(toRun.getGraph().toString());
     }
-
-
 }

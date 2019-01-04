@@ -289,7 +289,9 @@ public class PlaygroundPanel extends JPanel
     public void autoGame()
     {
         AutoMode.Algorithm(gameSettings);
-        HandleServer.setLocation(gameSettings.getPlayer().getLocation());
+        System.out.println();
+        System.out.println("PLAYER ADDED " + " ==> GIS: [" + gameSettings.getPlayer().getLocation().x() + "," + gameSettings.getPlayer().getLocation().y() + "]");
+        System.out.println();
         repaint();
         simulateRun();
     }
