@@ -15,6 +15,13 @@ public class Player implements GameElement
     private double speed;
     private double radius;
 
+    /**
+     * Default constructor
+     *
+     * @param location Location
+     * @param speed    Speed of player (20)
+     * @param radius   Radius of player (1)
+     */
     public Player(Point3D location, double speed, double radius)
     {
         this.location = location;
@@ -22,6 +29,11 @@ public class Player implements GameElement
         this.radius = radius;
     }
 
+    /**
+     * Parse info from string
+     *
+     * @param lineElements String to parse
+     */
     public Player(String[] lineElements)
     {
         if (!(lineElements[2].equals("0.0") && lineElements[3].equals("0.0")))
@@ -32,6 +44,9 @@ public class Player implements GameElement
         }
     }
 
+    /**
+     * Empty constructor
+     */
     public Player()
     {
         this.location = null;
@@ -39,6 +54,11 @@ public class Player implements GameElement
         this.radius = 0;
     }
 
+    /**
+     * Copy constructor
+     *
+     * @param player
+     */
     public Player(Player player)
     {
         this.location = new Point3D(player.getLocation());
@@ -46,7 +66,7 @@ public class Player implements GameElement
         this.radius = player.getRadius();
     }
 
-
+    // Getters & Setters \\
     public Point3D getLocation()
     {
         return location;
@@ -56,11 +76,6 @@ public class Player implements GameElement
     public int getID()
     {
         return 0;
-    }
-
-    public void setLocation(Point3D location)
-    {
-        this.location = location;
     }
 
     public double getSpeed()
@@ -84,12 +99,23 @@ public class Player implements GameElement
     }
 
     // Methods \\
-    // Angel between player and point
+
+    /**
+     * Get the angle between player and the point
+     *
+     * @param point Point to calculate
+     * @return angle
+     */
     public double angelToMove(Point3D point)
     {
         return MyCoords.azimuth_elevation_dist(this.location, point)[0];
     }
 
+    /**
+     * Image builder
+     *
+     * @return Image of player
+     */
     private static BufferedImage initImg()
     {
         try

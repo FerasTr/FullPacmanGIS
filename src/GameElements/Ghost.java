@@ -10,19 +10,18 @@ import java.io.IOException;
 public class Ghost implements GameElement
 {
     public static final BufferedImage ghost = initImg();
-    private int ID = -1;
+    private int ID;
     private Point3D location;
     private double speed;
     private double radius;
 
-    public Ghost(Point3D location, double speed, double radius)
-    {
-        this.location = location;
-        this.speed = speed;
-        this.radius = radius;
-        ID++;
-    }
+    // Constructors \\
 
+    /**
+     * Parse info from string
+     *
+     * @param lineElements String to parse
+     */
     public Ghost(String[] lineElements)
     {
         ID = Integer.parseInt(lineElements[1]);
@@ -31,6 +30,20 @@ public class Ghost implements GameElement
         radius = Double.parseDouble(lineElements[6]);
     }
 
+    /**
+     * Copy constructor
+     *
+     * @param ghost
+     */
+    public Ghost(Ghost ghost)
+    {
+        this.ID = ghost.getID();
+        this.location = new Point3D(ghost.getLocation());
+        this.speed = ghost.getSpeed();
+        this.radius = ghost.getRadius();
+    }
+
+    // Getters & Setters \\
     public int getID()
     {
         return ID;
@@ -40,11 +53,6 @@ public class Ghost implements GameElement
     public Point3D getLocation()
     {
         return location;
-    }
-
-    public void setLocation(Point3D location)
-    {
-        this.location = location;
     }
 
     public double getSpeed()
@@ -67,6 +75,13 @@ public class Ghost implements GameElement
         this.radius = radius;
     }
 
+    // Methods \\
+
+    /**
+     * Build image
+     *
+     * @return Image of ghost
+     */
     private static BufferedImage initImg()
     {
         try

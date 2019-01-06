@@ -12,7 +12,7 @@ import java.util.ArrayList;
 final public class HandleServer
 {
     // Variables \\
-    private static Play play = null;
+    public static Play play = null;
     private static Game game = null;
 
     // Constructors \\
@@ -37,7 +37,7 @@ final public class HandleServer
         // Return game from play object
         System.out.println("*****************************");
         System.out.println();
-        gameData();
+        GetGameDataWithBox();
         System.out.println("...INSERT A PLAYER TO PLAY...");
         System.out.println();
         return game;
@@ -59,7 +59,7 @@ final public class HandleServer
         // 4) get the game-board data
         System.out.println("*****************************");
         System.out.println("...PARSING GAME DATA...");
-        GetGameData();
+        GetGameDataNoBox();
         System.out.println("*****************************");
         System.out.println();
     }
@@ -80,14 +80,16 @@ final public class HandleServer
         System.out.println();
     }
 
-    public static Game play(Double angle)
+    public static boolean play(Double angle)
     {
         // 7) "Play" as long as there are "fruits" and time
         // 7.1) this is the main command to the player (on the server side)
         System.out.println("*****************************");
         System.out.println("...MOVING THE GAME...");
+        boolean done;
         if (play.isRuning())
         {
+            done = false;
             System.out.println("Moved by:" + angle + " degrees");
             play.rotate(angle);
             System.out.println("*****************************");
@@ -99,11 +101,12 @@ final public class HandleServer
             System.out.println("Game is no longer running");
             System.out.println("*****************************");
             System.out.println();
+            done = true;
         }
         // 7.2) get the current score of the game
         gameStatistics();
         // 7.3) get the game-board current state
-        return game;
+        return done;
     }
 
     public static void stopServer()
@@ -128,8 +131,7 @@ final public class HandleServer
     }
 
     // Helper methods \\
-    // TODO implement switch-case
-    private static void GetGameData()
+    private static void GetGameDataWithBox()
     {
         ArrayList<String> board_data;
         board_data = play.getBoard();
@@ -137,7 +139,7 @@ final public class HandleServer
         for (int i = 0; i < board_data.size(); i++)
         {
             String line = board_data.get(i);
-            System.out.println(line);
+            //System.out.println(line);
             String[] lineElements = line.split(",");
             if (lineElements[0].equals("P"))
             {
@@ -154,6 +156,35 @@ final public class HandleServer
             else if (lineElements[0].equals("B"))
             {
                 game.addBox(new Box(lineElements));
+            }
+            else if (lineElements[0].equals("M"))
+            {
+                game.setPlayer(new Player(lineElements));
+            }
+        }
+    }
+
+    private static void GetGameDataNoBox()
+    {
+        ArrayList<String> board_data;
+        board_data = play.getBoard();
+        game.clearGame();
+        for (int i = 0; i < board_data.size(); i++)
+        {
+            String line = board_data.get(i);
+            //ystem.out.println(line);
+            String[] lineElements = line.split(",");
+            if (lineElements[0].equals("P"))
+            {
+                game.addPacman(new Pacman(lineElements));
+            }
+            else if (lineElements[0].equals("F"))
+            {
+                game.addFruit(new Fruit(lineElements));
+            }
+            else if (lineElements[0].equals("G"))
+            {
+                game.addGhost(new Ghost(lineElements));
             }
             else if (lineElements[0].equals("M"))
             {

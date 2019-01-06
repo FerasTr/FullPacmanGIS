@@ -58,16 +58,17 @@ public class PlaygroundPanel extends JPanel
     {
         if (gameSettings != null)
         {
+            Game temp = new Game(gameSettings);
             // Display gameSettings elements \\
             // Game bots
-            Vector<GameElement> objects = gameSettings.getPacmanBots();
+            Vector<GameElement> objects = gameSettings.CopyPacmans();
             drawIcons(g, objects);
-            objects = gameSettings.getFruits();
+            objects = gameSettings.CopyFruits();
             drawIcons(g, objects);
-            objects = gameSettings.getGhostBots();
+            objects = gameSettings.CopyGhostBots();
             drawIcons(g, objects);
             // Game box
-            Vector<Box> obst = gameSettings.getObstecales();
+            Vector<Box> obst = gameSettings.getObstacles();
             drawBoxes(g, obst);
             // Player
             Player player = gameSettings.getPlayer();
@@ -84,7 +85,6 @@ public class PlaygroundPanel extends JPanel
         {
             for (GameElement obj : objects)
             {
-
                 drawIcon(g, obj);
             }
         }
@@ -109,6 +109,7 @@ public class PlaygroundPanel extends JPanel
                 g.fillRect(rect.x, rect.y, rect.width, rect.height);
             }
         }
+
     }
 
     private void drawIcon(Graphics g, GameElement obj)
@@ -191,6 +192,9 @@ public class PlaygroundPanel extends JPanel
 
     }
 
+    /**
+     * Mouse Listener to add player to the map
+     */
     public void addPlayer()
     {
         mouseClick = new MouseListener()
@@ -205,7 +209,7 @@ public class PlaygroundPanel extends JPanel
                 Player toAdd = new Player(inGPS, 20, 1);
                 gameSettings.setPlayer(toAdd);
                 System.out.println();
-                System.out.println("PLAYER ADDED " + " ==> PIXEL: [" + p.ix() + "," + p.iy() + "] GIS: [" + inGPS.x() + "," + inGPS.y() + "]");
+                System.out.println("PLAYER ADDED " + " ==> GIS: [" + inGPS.x() + "," + inGPS.y() + "]");
                 System.out.println();
                 repaint();
                 removeMouseListener(mouseClick);
@@ -238,6 +242,9 @@ public class PlaygroundPanel extends JPanel
         this.addMouseListener(mouseClick);
     }
 
+    /**
+     * Start manual game
+     */
     public void manualGame()
     {
         mouseClick = new MouseListener()
@@ -250,7 +257,7 @@ public class PlaygroundPanel extends JPanel
                 Point3D inGPS = map.pixleToGPS(p);
                 Player player = gameSettings.getPlayer();
                 double angle = player.angelToMove(inGPS);
-                gameSettings = HandleServer.play(angle);
+                HandleServer.play(angle);
                 repaint();
             }
 
@@ -281,11 +288,17 @@ public class PlaygroundPanel extends JPanel
         this.addMouseListener(mouseClick);
     }
 
+    /**
+     * Stop listening
+     */
     public void stopMouseListen()
     {
         removeMouseListener(mouseClick);
     }
 
+    /**
+     * Start auto game using a new thread.
+     */
     public void autoGame()
     {
         AutoMode.Algorithm(gameSettings);
@@ -293,6 +306,9 @@ public class PlaygroundPanel extends JPanel
         simulateRun();
     }
 
+    /**
+     * Start thread to simulate the board
+     */
     private void simulateRun()
     {
         RealTime simulation = new RealTime(this);

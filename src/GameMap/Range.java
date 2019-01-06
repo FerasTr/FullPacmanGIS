@@ -8,11 +8,21 @@ import Coordinates.Point3D;
  */
 public class Range
 {
-    Point3D top_left;
-    Point3D top_right;
-    Point3D bot_left;
-    Point3D bot_right;
+    // Variables \\
+    private Point3D top_left;
+    private Point3D top_right;
+    private Point3D bot_left;
+    private Point3D bot_right;
+    // Constructors \\
 
+    /**
+     * Map range constructor
+     *
+     * @param top_left_x  Top left gps coords x
+     * @param top_left_y  Top left gps coords y
+     * @param bot_right_x Bot right gps coords x
+     * @param bot_right_y Bot right gps coords y
+     */
     public Range(double top_left_x, double top_left_y, double bot_right_x, double bot_right_y)
     {
         top_left = new Point3D(top_left_x, top_left_y, 0);
@@ -21,6 +31,7 @@ public class Range
         bot_left = new Point3D(bot_right_x, top_left_y, 0);
     }
 
+    // Methods \\
     public double getTopX()
     {
         return top_left.x();

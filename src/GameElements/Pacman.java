@@ -10,21 +10,18 @@ import java.io.IOException;
 public class Pacman implements GameElement
 {
     public static final BufferedImage pac = initImg();
-    private int ID = -1;
+    private int ID;
     private Point3D location;
     private double speed;
     private double radius;
-    private double score = 0;
 
     // Constructor \\
-    public Pacman(double lat, double lon, double alt, double speed, double radius)
-    {
-        String location_string = "(" + lat + "," + lon + "," + alt + ")";
-        this.location = new Point3D(location_string);
-        this.speed = speed;
-        this.radius = radius;
-    }
 
+    /**
+     * Parse info from string
+     *
+     * @param lineElements String to parse
+     */
     public Pacman(String[] lineElements)
     {
         ID = Integer.parseInt(lineElements[1]);
@@ -33,13 +30,17 @@ public class Pacman implements GameElement
         radius = Double.parseDouble(lineElements[6]);
     }
 
+    /**
+     * Copy constructor
+     *
+     * @param pac Pac to copy
+     */
     public Pacman(Pacman pac)
     {
         this.ID = pac.getID();
         this.location = new Point3D(pac.getLocation());
         this.speed = pac.getSpeed();
         this.radius = pac.getRadius();
-        this.speed = pac.getScore();
     }
 
     // Getters & Setters \\
@@ -55,11 +56,6 @@ public class Pacman implements GameElement
         return location;
     }
 
-    public void setLocation(Point3D location)
-    {
-        this.location = location;
-    }
-
     public double getSpeed()
     {
         return speed;
@@ -70,23 +66,13 @@ public class Pacman implements GameElement
         return radius;
     }
 
-    public double getScore()
-    {
-        return score;
-    }
-
-    public void setScore(double score)
-    {
-        this.score += score;
-    }
-
     // Methods \\
 
-    public void resetCounter()
-    {
-        ID = -1;
-    }
-
+    /**
+     * Image builder
+     *
+     * @return Image of bot
+     */
     private static BufferedImage initImg()
     {
         try

@@ -314,22 +314,4 @@ public class Point3D implements Serializable
         ans = Math.atan2((p._z + h - _z), this.distance2D(p));
         return Math.toDegrees(ans);
     }
-
-    /**
-     * transform from radians to angles
-     */
-    public static double r2d(double a)
-    {
-        return Math.toDegrees(a);
-    }
-
-    /**
-     * transform from radians to angles
-     */
-    public static double d2r(double a)
-    {
-        return Math.toRadians(a);
-    }
-
-
 }

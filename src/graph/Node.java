@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Node
 {
-    private static int _counter = 0;
+    public static int _counter = 0;
     private int _id;
     private Node_Info _info;
     private ArrayList<Edge> _ni;
@@ -17,7 +17,6 @@ public class Node
 
     public Node(String s)
     {
-        this.set_id(_counter++);
         this.set_ni(new ArrayList());
         this._info = new Node_Info();
         this.set_name(s);

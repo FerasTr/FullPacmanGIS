@@ -9,20 +9,20 @@ import java.io.IOException;
 
 public class Fruit implements GameElement
 {
+    // Variables \\
     public static final BufferedImage fruit = initImg();
-    public int ID = -1;
+    public int ID;
     private Point3D location;
     private double weight;
-    String name;
+    private String name;
 
     // Constructor \\
 
-    public Fruit(Point3D location, double weight)
-    {
-        this.location = location;
-        this.weight = weight;
-    }
-
+    /**
+     * Parse info from the game board.
+     *
+     * @param lineElements Array to parse
+     */
     public Fruit(String[] lineElements)
     {
         ID = Integer.parseInt(lineElements[1]);
@@ -31,6 +31,11 @@ public class Fruit implements GameElement
         name = "fruit_" + this.ID;
     }
 
+    /**
+     * Copy Constructor
+     *
+     * @param fruit Fruit to copy
+     */
     public Fruit(Fruit fruit)
     {
         this.ID = fruit.getID();
@@ -38,6 +43,8 @@ public class Fruit implements GameElement
         this.weight = fruit.getWeight();
         this.name = fruit.getName();
     }
+
+    // Getters & Setters \\
 
     public String getName()
     {
@@ -49,7 +56,6 @@ public class Fruit implements GameElement
         this.name = name;
     }
 
-    // Getters & Setters \\
     @Override
     public int getID()
     {
@@ -62,11 +68,6 @@ public class Fruit implements GameElement
         return location;
     }
 
-    public void setLocation(Point3D location)
-    {
-        this.location = location;
-    }
-
     public double getWeight()
     {
         return weight;
@@ -74,11 +75,11 @@ public class Fruit implements GameElement
 
     // Methods \\
 
-    public void resetCounter()
-    {
-        ID = -1;
-    }
-
+    /**
+     * Build image of fruit
+     *
+     * @return Image
+     */
     private static BufferedImage initImg()
     {
         try

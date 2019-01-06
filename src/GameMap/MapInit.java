@@ -14,6 +14,11 @@ final public class MapInit
     {
     }
 
+    /**
+     * Hardcoded version of ariel map
+     *
+     * @return Map with ariel1.png dimension
+     */
     public static Map ArielMap()
     {
         double top_left_x = 32.105689;

@@ -10,29 +10,51 @@ public class Game
     private Vector<GameElement> pacmanBots;
     private Vector<GameElement> ghostBots;
     private Vector<GameElement> fruits;
-    private Vector<Box> obstecales;
+    private Vector<Box> obstacles;
+
     // TODO implement a completed check in the gui the displays the stats for the current "map"
     private boolean completed = false;
+
     private String fileName;
+    private Graph graph = new Graph();
 
-    Graph graph = new Graph();
+    // Constructors \\
 
+    /**
+     * Default constructor
+     */
     public Game()
     {
         player = new Player();
         pacmanBots = new Vector<>();
         ghostBots = new Vector<>();
         fruits = new Vector<>();
-        obstecales = new Vector<>();
+        obstacles = new Vector<>();
     }
 
+    /**
+     * Copy constructor
+     *
+     * @param game Game to copy
+     */
     public Game(Game game)
     {
-        this.player = new Player(game.getPlayer());
+        if (game.getPlayer().getLocation() == null)
+        {
+            this.player = new Player();
+        }
+        else
+        {
+            this.player = new Player(game.getPlayer());
+        }
         this.fruits = game.CopyFruits();
         this.pacmanBots = game.CopyPacmans();
-        this.obstecales = game.getObstecales();
+        this.obstacles = game.getObstacles();
+        this.ghostBots = game.CopyGhostBots();
+        this.fileName = game.getFileName();
     }
+
+    // Getters & Setters \\
 
     public Player getPlayer()
     {
@@ -49,19 +71,9 @@ public class Game
         return pacmanBots;
     }
 
-    public void setPacmanBots(Vector<GameElement> pacmanBots)
-    {
-        this.pacmanBots = pacmanBots;
-    }
-
     public Vector<GameElement> getGhostBots()
     {
         return ghostBots;
-    }
-
-    public void setGhostBots(Vector<GameElement> ghostBots)
-    {
-        this.ghostBots = ghostBots;
     }
 
     public Vector<GameElement> getFruits()
@@ -69,19 +81,9 @@ public class Game
         return fruits;
     }
 
-    public void setFruits(Vector<GameElement> fruits)
+    public Vector<Box> getObstacles()
     {
-        this.fruits = fruits;
-    }
-
-    public Vector<Box> getObstecales()
-    {
-        return obstecales;
-    }
-
-    public void setObstecales(Vector<Box> obstecales)
-    {
-        this.obstecales = obstecales;
+        return obstacles;
     }
 
     public boolean isCompleted()
@@ -109,6 +111,16 @@ public class Game
         this.fileName = fileName;
     }
 
+    public Graph getGraph()
+    {
+        return graph;
+    }
+
+    public void setGraph(Graph graph)
+    {
+        this.graph = graph;
+    }
+
     // Methods \\
     public void addPacman(Pacman pac)
     {
@@ -127,28 +139,25 @@ public class Game
 
     public void addBox(Box box)
     {
-        obstecales.add(box);
+        obstacles.add(box);
     }
 
-    public Graph getGraph()
-    {
-        return graph;
-    }
-
-    public void setGraph(Graph graph)
-    {
-        this.graph = graph;
-    }
-
+    /**
+     * Clear the game
+     */
     public void clearGame()
     {
         player = new Player();
         pacmanBots.clear();
         ghostBots.clear();
         fruits.clear();
-        obstecales.clear();
     }
 
+    /**
+     * Copy fruits in game
+     *
+     * @return Collection of fruits.
+     */
     public Vector<GameElement> CopyFruits()
     {
         Vector<GameElement> temp = new Vector<>();
@@ -159,12 +168,28 @@ public class Game
         return temp;
     }
 
+    /**
+     * Copy bots in game
+     *
+     * @return Collection of bots.
+     */
     public Vector<GameElement> CopyPacmans()
     {
         Vector<GameElement> temp = new Vector<>();
         for (GameElement pac : pacmanBots)
         {
             temp.add(new Pacman((Pacman) pac));
+        }
+        return temp;
+    }
+
+
+    public Vector<GameElement> CopyGhostBots()
+    {
+        Vector<GameElement> temp = new Vector<>();
+        for (GameElement ghost : ghostBots)
+        {
+            temp.add(new Ghost((Ghost) ghost));
         }
         return temp;
     }

@@ -152,28 +152,4 @@ public final class MyCoords
         Point3D calcRelativ = new Point3D(rel_x, rel_y, rel_z);
         return add(point1, calcRelativ);
     }
-
-    public static double deg2Rad(double deg)
-    {
-        double a = 90.0D - deg;
-        if (deg > 270.0D)
-        {
-            a = 450.0D - deg;
-        }
-
-        a = Math.toRadians(a);
-        return a;
-    }
-
-    public static double rad2Deg(double rad)
-    {
-        double a1 = Math.toDegrees(rad);
-        double ans = 90.0D - a1;
-        if (a1 > 90.0D)
-        {
-            ans = 450.0D - a1;
-        }
-
-        return ans;
-    }
 }
