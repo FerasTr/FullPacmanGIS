@@ -76,13 +76,7 @@ final public class AutoMode
     {
         Vector<GameElement> targets = toRun.getFruits();
         // Add player to the server.
-        if (toRun.getPlayer().getLocation() == null)
-        {
-            System.out.println("Adding player to the game...");
-            Point3D p = toRun.getFruits().get(0).getLocation();
-            p = MyCoords.add(p, new Point3D(2, 2, 0));
-            AddPlayerToServer(p);
-        }
+        AddPlayer();
         // Add player node.
         toRun.getGraph().add(new Node("player"));
         // Add fruits nodes.
@@ -326,12 +320,7 @@ final public class AutoMode
     {
         Vector<GameElement> targets = toRun.getFruits();
         // Add player to the server.
-        if (toRun.getPlayer().getLocation() == null)
-        {
-            System.out.println("Adding player to the game...");
-            Point3D p = toRun.getPacmanBots().get(0).getLocation();
-            AddPlayerToServer(p);
-        }
+        AddPlayer();
         toRun.getGraph().add(new Node("player"));
         // Add fruit nodes and edges
         AddFruitEdgesNoBox();
@@ -343,6 +332,7 @@ final public class AutoMode
             toRun.getGraph().addEdge("player", name, distance);
         }
     }
+
 
     /**
      * Add fruit nodes and edges.
@@ -383,18 +373,22 @@ final public class AutoMode
     ////////////
 
     /**
-     * Set player location.
-     *
-     * @param p player location
+     * Add player
      */
-    private static void AddPlayerToServer(Point3D p)
+    private static void AddPlayer()
     {
-        System.out.println();
-        System.out.println("PLAYER ADDED " + " ==> GIS: [" + p.x() + "," + p.y() + "]");
-        System.out.println();
-        HandleServer.setLocation(p);
-        Player toAdd = new Player(p, 20, 1);
-        toRun.setPlayer(toAdd);
-        HandleServer.startServer();
+        if (toRun.getPlayer().getLocation() == null)
+        {
+            System.out.println("Adding player to the game...");
+            Point3D p = toRun.getFruits().get(2).getLocation();
+            p = MyCoords.add(p, new Point3D(2, 2, 0));
+            System.out.println();
+            System.out.println("PLAYER ADDED " + " ==> GIS: [" + p.x() + "," + p.y() + "]");
+            System.out.println();
+            HandleServer.setLocation(p);
+            Player toAdd = new Player(p, 20, 1);
+            toRun.setPlayer(toAdd);
+            HandleServer.startServer();
+        }
     }
 }

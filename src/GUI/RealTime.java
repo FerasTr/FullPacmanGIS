@@ -36,7 +36,7 @@ public class RealTime implements Runnable
     {
         Graph G = game.getGraph();
         // Check if the game is done
-        while (HandleServer.play.isRuning())
+        while (HandleServer.play.isRuning() && !game.getFruits().isEmpty())
         {
             Fruit currentFruit = getBestTarget();
 
@@ -134,7 +134,7 @@ public class RealTime implements Runnable
             try
             {
                 simulationBoard.repaint();
-                Thread.sleep(100);
+                Thread.sleep(28);
             }
             catch (InterruptedException e)
             {

@@ -46,22 +46,22 @@ final public class HandleServer
     public static void playgroundInfo()
     {
         // 3) Get the GPS coordinates of the "arena"
-        System.out.println("*****************************");
-        System.out.println("...GETTING MAP INFO...");
+        //System.out.println("*****************************");
+        //System.out.println("...GETTING MAP INFO...");
         String map_data = play.getBoundingBox();
-        System.out.println("Bounding Box info: " + map_data);
-        System.out.println("*****************************");
+        //System.out.println("Bounding Box info: " + map_data);
+        //System.out.println("*****************************");
         System.out.println();
     }
 
     public static void gameData()
     {
         // 4) get the game-board data
-        System.out.println("*****************************");
-        System.out.println("...PARSING GAME DATA...");
+        // System.out.println("*****************************");
+        //System.out.println("...PARSING GAME DATA...");
         GetGameDataNoBox();
-        System.out.println("*****************************");
-        System.out.println();
+        //System.out.println("*****************************");
+        //System.out.println();
     }
 
     public static void setLocation(Point3D gps)
@@ -84,23 +84,23 @@ final public class HandleServer
     {
         // 7) "Play" as long as there are "fruits" and time
         // 7.1) this is the main command to the player (on the server side)
-        System.out.println("*****************************");
-        System.out.println("...MOVING THE GAME...");
+        //System.out.println("*****************************");
+        //System.out.println("...MOVING THE GAME...");
         boolean done;
         if (play.isRuning())
         {
             done = false;
-            System.out.println("Moved by:" + angle + " degrees");
+            // System.out.println("Moved by:" + angle + " degrees");
             play.rotate(angle);
-            System.out.println("*****************************");
-            System.out.println();
+            //   System.out.println("*****************************");
+            // System.out.println();
             gameData();
         }
         else
         {
-            System.out.println("Game is no longer running");
-            System.out.println("*****************************");
-            System.out.println();
+            //  System.out.println("Game is no longer running");
+            // System.out.println("*****************************");
+            //  System.out.println();
             done = true;
         }
         // 7.2) get the current score of the game
@@ -122,12 +122,12 @@ final public class HandleServer
     public static void gameStatistics()
     {
         // 9) print the data & save to the course DB
-        System.out.println("*****************************");
-        System.out.println("...GETTING GAME STATISTICS...");
+        //System.out.println("*****************************");
+        //System.out.println("...GETTING GAME STATISTICS...");
         String info = play.getStatistics();
-        System.out.println(info);
-        System.out.println("*****************************");
-        System.out.println();
+        // System.out.println(info);
+        //System.out.println("*****************************");
+        // System.out.println();
     }
 
     // Helper methods \\
