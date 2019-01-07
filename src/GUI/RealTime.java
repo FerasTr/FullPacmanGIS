@@ -59,6 +59,8 @@ public class RealTime implements Runnable
             G = game.getGraph();
         }
         System.out.println("***GAME IS DONE***");
+        System.out.println("***SHOWING DATABASE***");
+        simulationBoard.ShowScore();
     }
 
     /**
@@ -108,10 +110,6 @@ public class RealTime implements Runnable
             {
                 return m.pixleToGPS(new Point3D(min.x() - 3, min.y() + 3, 0));
             }
-        }
-        else
-        {
-            System.out.println("ITS A FRUIT");
         }
         return null;
     }

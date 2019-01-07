@@ -2,6 +2,7 @@ package GUI;
 
 import GameElements.Game;
 import GameMap.Map;
+import ToServer.EndDialog;
 import ToServer.HandleServer;
 
 import javax.swing.*;
@@ -24,11 +25,9 @@ public class MainFrame extends JFrame
     private JMenu gameCommand = new JMenu("Commands");
     private JMenuItem commandMan = new JMenuItem("Manual");
     private JMenuItem commandAuto = new JMenuItem("Auto");
-    private JMenuItem commandReset = new JMenuItem("Reset");
     // Game options \\
     private JMenu gameOptions = new JMenu("Options");
     private JMenuItem optionsOpen = new JMenuItem("Open");
-    private JMenuItem optionsClear = new JMenuItem("Clear");
     // Game insert \\
     private JMenu gameInsert = new JMenu("Insert");
     private JMenuItem insertPlayer = new JMenuItem("Player");
@@ -46,10 +45,8 @@ public class MainFrame extends JFrame
         // Add the menu bar and its elements to the frame
         gameCommand.add(commandMan);
         gameCommand.add(commandAuto);
-        gameCommand.add(commandReset);
         gameBar.add(gameCommand);
         gameOptions.add(optionsOpen);
-        gameOptions.add(optionsClear);
         gameBar.add(gameOptions);
         gameInsert.add(insertPlayer);
         gameBar.add(gameInsert);
@@ -58,7 +55,6 @@ public class MainFrame extends JFrame
         // Button options
         commandMan.setEnabled(false);
         commandAuto.setEnabled(false);
-        commandReset.setEnabled(false);
         insertPlayer.setEnabled(false);
 
         commandMan.addActionListener(new ActionListener()
@@ -78,14 +74,6 @@ public class MainFrame extends JFrame
                 runAuto();
             }
         });
-        commandReset.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                resetGame();
-            }
-        });
         optionsOpen.addActionListener(new ActionListener()
         {
             @Override
@@ -95,14 +83,6 @@ public class MainFrame extends JFrame
             }
         });
 
-        optionsClear.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                ClearGame();
-            }
-        });
 
         insertPlayer.addActionListener(new ActionListener()
         {
@@ -125,21 +105,7 @@ public class MainFrame extends JFrame
     {
         commandMan.setEnabled(false);
         commandAuto.setEnabled(false);
-        commandReset.setEnabled(true);
         battleground.autoGame();
-    }
-
-    private void resetGame()
-    {
-        game.clearGame();
-        battleground.stopMouseListen();
-        HandleServer.stopServer();
-        game = HandleServer.initGame(game.getFileName());
-        battleground.updateGame(game);
-        commandMan.setEnabled(false);
-        commandAuto.setEnabled(false);
-        commandReset.setEnabled(false);
-        insertPlayer.setEnabled(true);
     }
 
     private void runManual()
@@ -147,7 +113,6 @@ public class MainFrame extends JFrame
         HandleServer.startServer();
         commandMan.setEnabled(false);
         commandAuto.setEnabled(false);
-        commandReset.setEnabled(true);
         battleground.manualGame();
     }
 
@@ -160,19 +125,6 @@ public class MainFrame extends JFrame
         commandAuto.setEnabled(false);
     }
 
-    private void ClearGame()
-    {
-        if (game != null)
-        {
-            game.clearGame();
-            battleground.updateGame(game);
-            commandMan.setEnabled(false);
-            commandAuto.setEnabled(false);
-            commandReset.setEnabled(false);
-            insertPlayer.setEnabled(false);
-        }
-    }
-
     /**
      * Open and initialize game from a CSV file (send game to server).
      */
@@ -181,6 +133,7 @@ public class MainFrame extends JFrame
         if (game != null)
         {
             game.clearGame();
+            game.getObstacles().clear();
         }
         File selectedFile;
         JFileChooser fileChooser = new JFileChooser("./data");
@@ -191,7 +144,7 @@ public class MainFrame extends JFrame
             String fileName = selectedFile.getPath();
             System.out.println("Selected file: " + fileName);
             game = HandleServer.initGame(fileName);
-            battleground.updateGame(game);
+            battleground.updateGame(this,game);
             insertPlayer.setEnabled(true);
             commandAuto.setEnabled(true);
         }

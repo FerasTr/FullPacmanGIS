@@ -1,10 +1,11 @@
-package GUI;
+package ToServer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 
 public final class EndDialog
 {
@@ -16,15 +17,18 @@ public final class EndDialog
     private static Statement statement;
     private static Connection connection;
 
-    public static final double MAP1 = 545731857;
+    public static final double MAP1 = 2128259830;
     public static final double MAP2 = 1149748017;
     public static final double MAP3 = -683317070;
     public static final double MAP4 = 1193961129;
     public static final double MAP5 = 1577914705;
     public static final double MAP6 = -1315066918;
     public static final double MAP7 = -1377331871;
-    public static final double MAP8 = 552196504;
+    public static final double MAP8 = 306711633;
     public static final double MAP9 = 919248096;
+
+
+    private static DecimalFormat df2 = new DecimalFormat(".##");
 
     public static double[] GetAvg(double map)
     {
@@ -33,20 +37,22 @@ public final class EndDialog
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword);
             statement = connection.createStatement();
+            System.out.println("***MAP " + map + "***");
             // Get latest score
             double score = GetScore(map);
-            System.out.println("RECENT SCORE " + score);
+            System.out.println("***RECENT SCORE: " + score + "***");
             // Get your average point for current map
             double myAvg = MyAvg(map);
-            System.out.println("MY AVG " + myAvg);
+            System.out.println("***MY AVG: " + myAvg + "***");
             // Get everyone's average for current map
             double allAvg = AllAvg(map);
-            System.out.println("ALL AVG " + allAvg);
+            System.out.println("***ALL AVG: " + allAvg + "***");
             // Print the database
-            GetDatabase();
+            //GetDatabase();
             CloseConnections();
             // Return the average
-            return new double[]{score, myAvg, allAvg};
+            return new double[]{Double.parseDouble(df2.format(score)), Double.parseDouble(df2.format(myAvg)),
+                    Double.parseDouble(df2.format(allAvg))};
         }
 
         catch (SQLException sqle)
@@ -66,14 +72,14 @@ public final class EndDialog
 
     private static double GetScore(double map) throws SQLException
     {
-        String score = "SELECT Point FROM logs ORDER BY LogTime DESC LIMIT 1 WHERE FirstID = 133713376 AND " +
-                "SomeDouble" + " = " + map;
+        String score = "SELECT Point FROM logs WHERE (FirstID = 133713376) AND (SomeDouble = " + map + ")ORDER BY " +
+                "LogTime DESC LIMIT 1";
         resultSet = statement.executeQuery(score);
         if (resultSet.next())
         {
             return resultSet.getFloat(1);
         }
-        return 0;
+        return -125;
     }
 
 
@@ -81,13 +87,12 @@ public final class EndDialog
     {
         String getAvg = "SELECT AVG(Point) FROM logs WHERE " + "(FirstID = " + "133713376) AND " + "(SomeDouble " +
                 "=" + " " + map + ")";
-        float avg = 0;
         resultSet = statement.executeQuery(getAvg);
         if (resultSet.next())
         {
-            avg = resultSet.getFloat(1);
+            return resultSet.getFloat(1);
         }
-        return avg;
+        return -125;
     }
 
     private static float AllAvg(double map) throws SQLException
@@ -104,13 +109,54 @@ public final class EndDialog
 
     private static void GetDatabase() throws SQLException
     {
-        String getDB = "SELECT * FROM logs;";
+        String getDB = "SELECT * FROM logs ORDER BY LogTime DESC LIMIT 20";
         resultSet = statement.executeQuery(getDB);
-        System.out.println("FirstID\t\tSecondID\tThirdID\t\tLogTime\t\t\tPoint\t\tSomeDouble");
+        System.out.println("FirstID\t\t\t\tSecondID\t\t\t\tThirdID\t\t\t\tLogTime\t\t\t\tPoint\t\t\t\tSomeDouble");
         while (resultSet.next())
         {
-            System.out.println(resultSet.getInt("FirstID") + "\t\t" + resultSet.getInt("SecondID") + "\t\t" + resultSet.getInt("ThirdID") + "\t\t" + resultSet.getTimestamp("LogTime") + "\t\t\t\t" + resultSet.getDouble("Point") + "\t\t" + resultSet.getDouble("SomeDouble"));
+            System.out.println(resultSet.getInt("FirstID") + "\t\t\t\t" + resultSet.getInt("SecondID") + "\t\t\t\t" + resultSet.getInt("ThirdID") + "\t\t\t\t" + resultSet.getTimestamp("LogTime") + "\t\t\t\t" + resultSet.getDouble("Point") + "\t\t\t\t" + resultSet.getDouble("SomeDouble"));
         }
+    }
+
+    public static double GetMap(String name)
+    {
+        if (name.contains("example1"))
+        {
+            return MAP1;
+        }
+        else if (name.contains("example2"))
+        {
+            return MAP2;
+        }
+        else if (name.contains("example3"))
+        {
+            return MAP3;
+        }
+        else if (name.contains("example4"))
+        {
+            return MAP4;
+        }
+        else if (name.contains("example5"))
+        {
+            return MAP5;
+        }
+        else if (name.contains("example6"))
+        {
+            return MAP6;
+        }
+        else if (name.contains("example7"))
+        {
+            return MAP7;
+        }
+        else if (name.contains("example8"))
+        {
+            return MAP8;
+        }
+        else if (name.contains("example9"))
+        {
+            return MAP9;
+        }
+        return -1;
     }
 
     private static void CloseConnections() throws SQLException

@@ -11,10 +11,6 @@ public class Game
     private Vector<GameElement> ghostBots;
     private Vector<GameElement> fruits;
     private Vector<Box> obstacles;
-
-    // TODO implement a completed check in the gui the displays the stats for the current "map"
-    private boolean completed = false;
-
     private String fileName;
     private Graph graph = new Graph();
 
@@ -84,21 +80,6 @@ public class Game
     public Vector<Box> getObstacles()
     {
         return obstacles;
-    }
-
-    public boolean isCompleted()
-    {
-        return completed;
-    }
-
-    public void setCompleted()
-    {
-        this.completed = true;
-    }
-
-    public void setNotCompleted()
-    {
-        this.completed = false;
     }
 
     public String getFileName()

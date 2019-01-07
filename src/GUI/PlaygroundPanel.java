@@ -1,10 +1,12 @@
 package GUI;
 
 import Algorithm.AutoMode;
+import Coordinates.MyCoords;
 import Coordinates.Point3D;
 import GameElements.*;
 import GameElements.Box;
 import GameMap.Map;
+import ToServer.EndDialog;
 import ToServer.HandleServer;
 
 import javax.swing.*;
@@ -13,6 +15,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * JPanel for displaying the gameSettings
@@ -27,11 +31,13 @@ public class PlaygroundPanel extends JPanel
     private Map map;
     private Game gameSettings = null;
     MouseListener mouseClick;
+    MainFrame mainFrame;
     // Icons
     BufferedImage playerIcon = Player.player;
     BufferedImage pacIcon = Pacman.pac;
     BufferedImage ghostIcon = Ghost.ghost;
     BufferedImage fruitIcon = Fruit.fruit;
+
 
     public PlaygroundPanel(Map battlegroundMap)
     {
@@ -58,7 +64,6 @@ public class PlaygroundPanel extends JPanel
     {
         if (gameSettings != null)
         {
-            Game temp = new Game(gameSettings);
             // Display gameSettings elements \\
             // Game bots
             Vector<GameElement> objects = gameSettings.CopyPacmans();
@@ -77,6 +82,12 @@ public class PlaygroundPanel extends JPanel
                 drawIcon(g, player);
             }
         }
+    }
+
+    public void ShowScore()
+    {
+        double[] result = EndDialog.GetAvg(EndDialog.GetMap(gameSettings.getFileName()));
+        GameOver go = new GameOver(mainFrame, result[0], result[1], result[2]);
     }
 
     private void drawIcons(Graphics g, Vector<GameElement> objects)
@@ -139,8 +150,9 @@ public class PlaygroundPanel extends JPanel
     }
 
     // Methods \\
-    public void updateGame(Game gameSettings)
+    public void updateGame(MainFrame parent, Game gameSettings)
     {
+        mainFrame = parent;
         // Linking both games, should be used once
         this.gameSettings = gameSettings;
         repaint();
@@ -255,10 +267,11 @@ public class PlaygroundPanel extends JPanel
                 Point3D clickLocation = new Point3D(e.getX(), e.getY(), 0);
                 Point3D p = pointBeforeResize(clickLocation);
                 Point3D inGPS = map.pixleToGPS(p);
-                Player player = gameSettings.getPlayer();
-                double angle = player.angelToMove(inGPS);
-                HandleServer.play(angle);
-                repaint();
+                ExecutorService executor = Executors.newFixedThreadPool(5);
+                MyThread smallSteps = new MyThread(inGPS);
+                executor.execute(smallSteps);
+
+                System.out.println("Finished all threads");
             }
 
             @Override
@@ -314,5 +327,41 @@ public class PlaygroundPanel extends JPanel
         RealTime simulation = new RealTime(this);
         Thread thread = new Thread(simulation);
         thread.start();
+    }
+
+    class MyThread implements Runnable
+    {
+        Point3D inGPS;
+
+        public MyThread(Point3D inGPS)
+        {
+            this.inGPS = inGPS;
+        }
+
+        @Override
+        public void run()
+        {
+            while (MyCoords.distance3d(inGPS, gameSettings.getPlayer().getLocation()) > 2)
+            {
+                double angle = gameSettings.getPlayer().angelToMove(inGPS);
+
+                boolean running = HandleServer.play(angle);
+                repaint();
+                try
+                {
+                    Thread.sleep(16);
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+                if (running)
+                {
+                    stopMouseListen();
+                    ShowScore();
+                    break;
+                }
+            }
+        }
     }
 }
