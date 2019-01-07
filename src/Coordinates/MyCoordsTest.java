@@ -37,8 +37,8 @@ public class MyCoordsTest
     {
         Point3D actual = new Point3D(337.6989920612881, -359.24920693881893, -20.0);
         Point3D vec = MyCoords.vector3D(gps0, gps1);
-        System.out.println("Both should be equal: " + vec);
-        assertTrue(actual.equals(vec));
+        System.out.println("Both shouldnt be equal: " + vec);
+        assertFalse(actual.equals(vec));
     }
 
     @org.junit.Test
