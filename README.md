@@ -20,4 +20,4 @@ After completing the game, a dialog will appear on the screen showing the curren
 
 > Pictures:
 
-![](https://imgur.com/a/j7mYdnA)
+![](https://i.imgur.com/5VkQ1BI.png)
