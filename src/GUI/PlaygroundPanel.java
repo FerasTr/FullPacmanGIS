@@ -259,19 +259,30 @@ public class PlaygroundPanel extends JPanel
      */
     public void manualGame()
     {
+
+        MyThread smallSteps = new MyThread();
+        Thread t = new Thread(smallSteps);
+        t.start();
+
         mouseClick = new MouseListener()
         {
+
             @Override
             public void mouseClicked(MouseEvent e)
             {
                 Point3D clickLocation = new Point3D(e.getX(), e.getY(), 0);
                 Point3D p = pointBeforeResize(clickLocation);
                 Point3D inGPS = map.pixleToGPS(p);
-                ExecutorService executor = Executors.newFixedThreadPool(5);
-                MyThread smallSteps = new MyThread(inGPS);
-                executor.execute(smallSteps);
+                double angle = gameSettings.getPlayer().angelToMove(inGPS);
+                smallSteps.setDegree(angle);
 
-                System.out.println("Finished all threads");
+                boolean running = HandleServer.play(angle);
+               // repaint();
+                if (running)
+                {
+                    stopMouseListen();
+                    ShowScore();
+                }
             }
 
             @Override
@@ -331,21 +342,31 @@ public class PlaygroundPanel extends JPanel
 
     class MyThread implements Runnable
     {
-        Point3D inGPS;
+        private double degree;
 
-        public MyThread(Point3D inGPS)
+
+        public MyThread()
         {
-            this.inGPS = inGPS;
+
+        }
+
+        public double getDegree()
+        {
+            return degree;
+        }
+
+        public void setDegree(double degree)
+        {
+            this.degree = degree;
         }
 
         @Override
         public void run()
         {
-            while (MyCoords.distance3d(inGPS, gameSettings.getPlayer().getLocation()) > 2)
+            while ( HandleServer.play.isRuning())
             {
-                double angle = gameSettings.getPlayer().angelToMove(inGPS);
 
-                boolean running = HandleServer.play(angle);
+                HandleServer.play(getDegree());
                 repaint();
                 try
                 {
@@ -355,12 +376,7 @@ public class PlaygroundPanel extends JPanel
                 {
                     e.printStackTrace();
                 }
-                if (running)
-                {
-                    stopMouseListen();
-                    ShowScore();
-                    break;
-                }
+
             }
         }
     }
