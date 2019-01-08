@@ -17,16 +17,15 @@ public final class EndDialog
     private static Statement statement;
     private static Connection connection;
 
-    public static final double MAP1 = 2128259830;
-    public static final double MAP2 = 1149748017;
-    public static final double MAP3 = -683317070;
-    public static final double MAP4 = 1193961129;
-    public static final double MAP5 = 1577914705;
-    public static final double MAP6 = -1315066918;
-    public static final double MAP7 = -1377331871;
-    public static final double MAP8 = 306711633;
-    public static final double MAP9 = 919248096;
-
+    private static final double MAP1 = 2128259830;
+    private static final double MAP2 = 1149748017;
+    private static final double MAP3 = -683317070;
+    private static final double MAP4 = 1193961129;
+    private static final double MAP5 = 1577914705;
+    private static final double MAP6 = -1315066918;
+    private static final double MAP7 = -1377331871;
+    private static final double MAP8 = 306711633;
+    private static final double MAP9 = 919248096;
 
     private static DecimalFormat df2 = new DecimalFormat(".##");
 
@@ -48,7 +47,7 @@ public final class EndDialog
             double allAvg = AllAvg(map);
             System.out.println("***ALL AVG: " + allAvg + "***");
             // Print the database
-            //GetDatabase();
+            GetDatabase();
             CloseConnections();
             // Return the average
             return new double[]{Double.parseDouble(df2.format(score)), Double.parseDouble(df2.format(myAvg)),
@@ -72,14 +71,15 @@ public final class EndDialog
 
     private static double GetScore(double map) throws SQLException
     {
-        String score = "SELECT Point FROM logs WHERE (FirstID = 133713376) AND (SomeDouble = " + map + ")ORDER BY " +
-                "LogTime DESC LIMIT 1";
+        String score =
+                "SELECT Point FROM logs WHERE (FirstID = 133713376) AND (SomeDouble = " + map + ")ORDER BY " +
+                        "LogTime DESC LIMIT 1";
         resultSet = statement.executeQuery(score);
         if (resultSet.next())
         {
             return resultSet.getFloat(1);
         }
-        return -125;
+        return -68;
     }
 
 
@@ -92,7 +92,7 @@ public final class EndDialog
         {
             return resultSet.getFloat(1);
         }
-        return -125;
+        return -68;
     }
 
     private static float AllAvg(double map) throws SQLException
@@ -104,12 +104,12 @@ public final class EndDialog
         {
             return resultSet.getFloat(1);
         }
-        return -1;
+        return -68;
     }
 
     private static void GetDatabase() throws SQLException
     {
-        String getDB = "SELECT * FROM logs ORDER BY LogTime DESC LIMIT 20";
+        String getDB = "SELECT * FROM logs ORDER BY LogTime DESC LIMIT 10";
         resultSet = statement.executeQuery(getDB);
         System.out.println("FirstID\t\t\t\tSecondID\t\t\t\tThirdID\t\t\t\tLogTime\t\t\t\tPoint\t\t\t\tSomeDouble");
         while (resultSet.next())

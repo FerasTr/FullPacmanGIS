@@ -260,9 +260,9 @@ public class PlaygroundPanel extends JPanel
     public void manualGame()
     {
 
-        MyThread smallSteps = new MyThread();
-        Thread t = new Thread(smallSteps);
-        t.start();
+        MyThread steps = new MyThread();
+        Thread move = new Thread(steps);
+        move.start();
 
         mouseClick = new MouseListener()
         {
@@ -274,15 +274,7 @@ public class PlaygroundPanel extends JPanel
                 Point3D p = pointBeforeResize(clickLocation);
                 Point3D inGPS = map.pixleToGPS(p);
                 double angle = gameSettings.getPlayer().angelToMove(inGPS);
-                smallSteps.setDegree(angle);
-
-                boolean running = HandleServer.play(angle);
-               // repaint();
-                if (running)
-                {
-                    stopMouseListen();
-                    ShowScore();
-                }
+                steps.setDegree(angle);
             }
 
             @Override
@@ -344,7 +336,6 @@ public class PlaygroundPanel extends JPanel
     {
         private double degree;
 
-
         public MyThread()
         {
 
@@ -363,7 +354,7 @@ public class PlaygroundPanel extends JPanel
         @Override
         public void run()
         {
-            while ( HandleServer.play.isRuning())
+            while (HandleServer.play.isRuning())
             {
 
                 HandleServer.play(getDegree());
@@ -378,6 +369,8 @@ public class PlaygroundPanel extends JPanel
                 }
 
             }
+            stopMouseListen();
+            ShowScore();
         }
     }
 }
