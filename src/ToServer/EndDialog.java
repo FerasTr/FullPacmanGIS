@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 
+/**
+ * End game dialog calculations are done in this class using the provided MySQL server
+ */
 public final class EndDialog
 {
     private static String jdbcUrl = "jdbc:mysql://ariel-oop.xyz:3306/oop";
@@ -29,6 +32,12 @@ public final class EndDialog
 
     private static DecimalFormat df2 = new DecimalFormat(".##");
 
+    /**
+     * Get the score for the current map
+     *
+     * @param map
+     * @return
+     */
     public static double[] GetAvg(double map)
     {
         try
@@ -47,7 +56,8 @@ public final class EndDialog
             double allAvg = AllAvg(map);
             System.out.println("***ALL AVG: " + allAvg + "***");
             // Print the database
-            GetDatabase();
+            PrintDatabase();
+            // Close the connections
             CloseConnections();
             // Return the average
             return new double[]{Double.parseDouble(df2.format(score)), Double.parseDouble(df2.format(myAvg)),
@@ -69,6 +79,13 @@ public final class EndDialog
         return null;
     }
 
+    /**
+     * Get the score for this game using the ID and map hash code.
+     *
+     * @param map hashcode representing the game map.
+     * @return Score
+     * @throws SQLException
+     */
     private static double GetScore(double map) throws SQLException
     {
         String score =
@@ -79,10 +96,17 @@ public final class EndDialog
         {
             return resultSet.getFloat(1);
         }
+        // Never reach this
         return -68;
     }
 
-
+    /**
+     * Get the average for this game using the ID and map hash code.
+     *
+     * @param map hashcode representing the game map.
+     * @return My average
+     * @throws SQLException
+     */
     private static double MyAvg(double map) throws SQLException
     {
         String getAvg = "SELECT AVG(Point) FROM logs WHERE " + "(FirstID = " + "133713376) AND " + "(SomeDouble " +
@@ -92,9 +116,17 @@ public final class EndDialog
         {
             return resultSet.getFloat(1);
         }
+        // Never reach this
         return -68;
     }
 
+    /**
+     * Get the average (everyone) for this game using the ID and map hash code.
+     *
+     * @param map hashcode representing the game map.
+     * @return All average
+     * @throws SQLException
+     */
     private static float AllAvg(double map) throws SQLException
     {
         String getAvg = "SELECT AVG(Point) FROM logs WHERE (SomeDouble=" + map + ")";
@@ -104,10 +136,16 @@ public final class EndDialog
         {
             return resultSet.getFloat(1);
         }
+        // Never reach this
         return -68;
     }
 
-    private static void GetDatabase() throws SQLException
+    /**
+     * Print the last 20 entry in the database.
+     *
+     * @throws SQLException
+     */
+    private static void PrintDatabase() throws SQLException
     {
         String getDB = "SELECT * FROM logs ORDER BY LogTime DESC LIMIT 10";
         resultSet = statement.executeQuery(getDB);
@@ -118,6 +156,12 @@ public final class EndDialog
         }
     }
 
+    /**
+     * Retrun the Game map hashcode
+     *
+     * @param name Name of the map
+     * @return hashcode
+     */
     public static double GetMap(String name)
     {
         if (name.contains("example1"))
@@ -159,6 +203,11 @@ public final class EndDialog
         return -1;
     }
 
+    /**
+     * Close SQL connections
+     *
+     * @throws SQLException
+     */
     private static void CloseConnections() throws SQLException
     {
         resultSet.close();

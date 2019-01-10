@@ -139,6 +139,7 @@ public class PlaygroundPanel extends JPanel
 
     /**
      * Draw the icon
+     *
      * @param obj Object to draw
      */
     private void drawIcon(Graphics g, GameElement obj)
@@ -170,9 +171,10 @@ public class PlaygroundPanel extends JPanel
     // Methods \\
 
     /**
-     * Update game board using a new game
-     * @param parent
-     * @param gameSettings
+     * Update game board using a new game, update game parent for dialog
+     *
+     * @param parent       Main JFrame to update
+     * @param gameSettings Game to update
      */
     public void updateGame(MainFrame parent, Game gameSettings)
     {
@@ -225,7 +227,6 @@ public class PlaygroundPanel extends JPanel
         g2d.dispose();
 
         return dimg;
-
     }
 
     /**
@@ -279,12 +280,12 @@ public class PlaygroundPanel extends JPanel
     }
 
     /**
-     * Start manual game
+     * Start manual game using a thread for moving the player
      */
     public void manualGame()
     {
 
-        MyThread steps = new MyThread();
+        ManualThread steps = new ManualThread();
         Thread move = new Thread(steps);
         move.start();
 
@@ -361,11 +362,14 @@ public class PlaygroundPanel extends JPanel
         return gameSettings;
     }
 
-    class MyThread implements Runnable
+    /**
+     * Manual thread for moving the pac at all time
+     */
+    class ManualThread implements Runnable
     {
         private double degree;
 
-        public MyThread()
+        public ManualThread()
         {
 
         }
@@ -390,7 +394,7 @@ public class PlaygroundPanel extends JPanel
                 repaint();
                 try
                 {
-                    Thread.sleep(16);
+                    Thread.sleep(144);
                 }
                 catch (InterruptedException e)
                 {

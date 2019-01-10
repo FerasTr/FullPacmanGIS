@@ -13,6 +13,9 @@ import graph.Node;
 import java.util.ArrayList;
 import java.util.Vector;
 
+/**
+ * This class uses the AutoMode to calculate the best move for each move, and moves the player automatically.
+ */
 public class RealTime implements Runnable
 {
     private PlaygroundPanel simulationBoard;
