@@ -32,6 +32,8 @@ public class Range
     }
 
     // Methods \\
+
+    // Getters & Setters \\
     public double getTopX()
     {
         return top_left.x();
@@ -72,16 +74,31 @@ public class Range
         return bot_left;
     }
 
+    /**
+     * Delta between the X.
+     *
+     * @return Delta of the main points
+     */
     public double getDeltaX()
     {
         return top_left.x() - bot_right.x();
     }
 
+    /**
+     * Delta between the Y.
+     *
+     * @return Delta of the main points
+     */
     public double getDeltaY()
     {
         return top_left.y() - bot_right.y();
     }
 
+    /**
+     * Delta between the Y, using a relative value.
+     *
+     * @return Delta of the main points
+     */
     public double getMidDeltaY(double relative)
     {
         Point3D gpsLeft = getLeftMid(relative);
@@ -90,17 +107,34 @@ public class Range
 
     }
 
+    /**
+     * Middle vector using the relative value.
+     *
+     * @param relative Ratio to use
+     * @return Vector of the mid left point
+     */
     public Point3D getLeftMid(double relative)
     {
         return MyCoords.midGPS(relative, top_left, bot_left);
 
     }
 
+    /**
+     * Middle vector using the relative value.
+     *
+     * @param relative Ratio to use
+     * @return Vector of the mid right point
+     */
     public Point3D getRightMid(double relative)
     {
         return MyCoords.midGPS(relative, top_right, bot_right);
     }
 
+    /**
+     * Delta using pixels.
+     *
+     * @return Delta between the pixels
+     */
     public double getPixelGPSDelta(Point3D pointInPixel)
     {
         return top_left.x() - pointInPixel.x();

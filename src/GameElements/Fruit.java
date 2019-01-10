@@ -7,6 +7,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This class represents the target object (fruit) of the game.
+ */
 public class Fruit implements GameElement
 {
     // Variables \\
@@ -93,6 +96,12 @@ public class Fruit implements GameElement
         return null;
     }
 
+    /**
+     * Check if two fruits are equal
+     *
+     * @param fruit Fruit to compare
+     * @return true if match, false otherwise
+     */
     public boolean equal(Fruit fruit)
     {
         if (this.getID() == fruit.getID())

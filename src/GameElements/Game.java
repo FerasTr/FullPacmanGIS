@@ -4,6 +4,9 @@ import graph.Graph;
 
 import java.util.Vector;
 
+/**
+ * This class represents the game object, it holds a collection of the game assets.
+ */
 public class Game
 {
     private Player player;
@@ -150,9 +153,9 @@ public class Game
     }
 
     /**
-     * Copy bots in game
+     * Copy pac bots in game
      *
-     * @return Collection of bots.
+     * @return Collection of pac bots.
      */
     public Vector<GameElement> CopyPacmans()
     {
@@ -164,7 +167,11 @@ public class Game
         return temp;
     }
 
-
+    /**
+     * Copy ghost bots in game
+     *
+     * @return Collection of ghost bots.
+     */
     public Vector<GameElement> CopyGhostBots()
     {
         Vector<GameElement> temp = new Vector<>();

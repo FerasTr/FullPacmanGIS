@@ -1,8 +1,7 @@
 package GUI;
 
 import Algorithm.AutoMode;
-import Coordinates.MyCoords;
-import Coordinates.Point3D;
+import Coordinates.*;
 import GameElements.*;
 import GameElements.Box;
 import GameMap.Map;
@@ -15,8 +14,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * JPanel for displaying the gameSettings
@@ -33,12 +30,16 @@ public class PlaygroundPanel extends JPanel
     MouseListener mouseClick;
     MainFrame mainFrame;
     // Icons
-    BufferedImage playerIcon = Player.player;
-    BufferedImage pacIcon = Pacman.pac;
-    BufferedImage ghostIcon = Ghost.ghost;
-    BufferedImage fruitIcon = Fruit.fruit;
+    private final BufferedImage playerIcon = Player.player;
+    private final BufferedImage pacIcon = Pacman.pac;
+    private final BufferedImage ghostIcon = Ghost.ghost;
+    private final BufferedImage fruitIcon = Fruit.fruit;
 
-
+    /**
+     * Game board constructor
+     *
+     * @param battlegroundMap Map to use as reference
+     */
     public PlaygroundPanel(Map battlegroundMap)
     {
         map = battlegroundMap;
@@ -48,6 +49,10 @@ public class PlaygroundPanel extends JPanel
     }
 
     // Paint \\
+
+    /**
+     * Paint the game to the board
+     */
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
@@ -55,10 +60,6 @@ public class PlaygroundPanel extends JPanel
         drawGame(g);
     }
 
-    public Game getGameSettings()
-    {
-        return gameSettings;
-    }
 
     private void drawGame(Graphics g)
     {
@@ -84,12 +85,20 @@ public class PlaygroundPanel extends JPanel
         }
     }
 
+    /**
+     * Show the end game dialog
+     */
     public void ShowScore()
     {
         double[] result = EndDialog.GetAvg(EndDialog.GetMap(gameSettings.getFileName()));
         GameOver go = new GameOver(mainFrame, result[0], result[1], result[2]);
     }
 
+    /**
+     * Draw each icon for the object collection
+     *
+     * @param objects Game elements to draw
+     */
     private void drawIcons(Graphics g, Vector<GameElement> objects)
     {
         if (objects.size() != 0)
@@ -101,6 +110,11 @@ public class PlaygroundPanel extends JPanel
         }
     }
 
+    /**
+     * Draw obstacles
+     *
+     * @param obst Object to draw
+     */
     private void drawBoxes(Graphics g, Vector<Box> obst)
     {
         if (obst.size() != 0)
@@ -123,6 +137,10 @@ public class PlaygroundPanel extends JPanel
 
     }
 
+    /**
+     * Draw the icon
+     * @param obj Object to draw
+     */
     private void drawIcon(Graphics g, GameElement obj)
     {
         Point3D locationInGPS = obj.getLocation();
@@ -150,6 +168,12 @@ public class PlaygroundPanel extends JPanel
     }
 
     // Methods \\
+
+    /**
+     * Update game board using a new game
+     * @param parent
+     * @param gameSettings
+     */
     public void updateGame(MainFrame parent, Game gameSettings)
     {
         mainFrame = parent;
@@ -332,6 +356,11 @@ public class PlaygroundPanel extends JPanel
         thread.start();
     }
 
+    public Game getGameSettings()
+    {
+        return gameSettings;
+    }
+
     class MyThread implements Runnable
     {
         private double degree;
@@ -373,4 +402,5 @@ public class PlaygroundPanel extends JPanel
             ShowScore();
         }
     }
+
 }

@@ -8,6 +8,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Main game element class, object represents the player of the game.
+ */
 public class Player implements GameElement
 {
     public static final BufferedImage player = initImg();

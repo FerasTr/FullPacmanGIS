@@ -1,8 +1,10 @@
 package GUI;
 
 import javax.swing.*;
-import java.awt.*;
 
+/**
+ * End game dialog, showing current score and map average.
+ */
 public class GameOver extends JDialog
 {
     private JLabel yourScore = new JLabel();

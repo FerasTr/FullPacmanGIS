@@ -7,6 +7,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This class represents the pac bot of the game.
+ */
 public class Pacman implements GameElement
 {
     public static final BufferedImage pac = initImg();

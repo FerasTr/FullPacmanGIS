@@ -7,6 +7,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This class represents the ghost of the game, it follows the player around to eat him
+ */
 public class Ghost implements GameElement
 {
     public static final BufferedImage ghost = initImg();

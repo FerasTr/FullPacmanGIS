@@ -9,8 +9,6 @@ import graph.*;
 import java.util.ArrayList;
 import java.util.Vector;
 
-// TODO Improve player picker
-
 /**
  * AutoMode is a class to play the game alone, built using Dijkstra algorithm.
  * The algorithm calculates the best possible move for the current position.

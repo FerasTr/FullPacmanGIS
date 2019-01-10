@@ -19,6 +19,7 @@ public class Box
 
     /**
      * Parse info from the game board.
+     *
      * @param lineElements Array to parse
      */
     public Box(String[] lineElements)
@@ -45,6 +46,13 @@ public class Box
     }
 
     // Methods \\
+
+    /**
+     * Check if the provided point is inside this box
+     *
+     * @param point Point to check
+     * @return true if inside, false otherwise
+     */
     public boolean IsInside(Point3D point)
     {
         Point3D tempMin = m.gpsToPixle(min);

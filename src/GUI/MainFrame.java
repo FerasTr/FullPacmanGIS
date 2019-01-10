@@ -101,6 +101,9 @@ public class MainFrame extends JFrame
         setVisible(true);
     }
 
+    /**
+     * Run auto mode
+     */
     private void runAuto()
     {
         commandMan.setEnabled(false);
@@ -108,6 +111,9 @@ public class MainFrame extends JFrame
         battleground.autoGame();
     }
 
+    /**
+     * Run manual mode
+     */
     private void runManual()
     {
         HandleServer.startServer();
@@ -116,6 +122,9 @@ public class MainFrame extends JFrame
         battleground.manualGame();
     }
 
+    /**
+     * Add player to the game board
+     */
     private void AddPlayer()
     {
         System.out.println("Adding player to the game...");
@@ -144,7 +153,7 @@ public class MainFrame extends JFrame
             String fileName = selectedFile.getPath();
             System.out.println("Selected file: " + fileName);
             game = HandleServer.initGame(fileName);
-            battleground.updateGame(this,game);
+            battleground.updateGame(this, game);
             insertPlayer.setEnabled(true);
             commandAuto.setEnabled(true);
         }
