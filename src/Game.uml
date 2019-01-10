@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="523.0">com</node>
+    <node x="357.0" y="301.0">netscape</node>
+    <node x="493.0" y="375.0">Server</node>
+    <node x="425.0" y="597.0">Driver</node>
+    <node x="0.0" y="153.0">toolbarButtonGraphics</node>
+    <node x="441.0" y="523.0">sun</node>
+    <node x="455.0" y="153.0">groovyjarjarasm</node>
+    <node x="296.0" y="523.0">java</node>
+    <node x="460.0" y="449.0">javax</node>
+    <node x="0.0" y="597.0">GUI</node>
+    <node x="0.0" y="79.0">Coords</node>
+    <node x="170.0" y="375.0">images</node>
+    <node x="148.0" y="523.0">junit</node>
+    <node x="0.0" y="375.0">ToServer</node>
+    <node x="155.0" y="449.0">maps</node>
+    <node x="391.0" y="227.0">GameMap</node>
+    <node x="0.0" y="227.0">GameElements</node>
+    <node x="143.0" y="597.0">org</node>
+    <node x="203.0" y="227.0">Coordinates</node>
+    <node x="308.0" y="449.0">icons</node>
+    <node x="179.0" y="301.0">Algorithm</node>
+    <node x="0.0" y="449.0">graph</node>
+    <node x="285.0" y="597.0">jdk</node>
+    <node x="0.0" y="301.0">META-INF</node>
+    <node x="169.5" y="0.0">GIS</node>
+    <node x="332.0" y="375.0">groovy</node>
+    <node x="318.0" y="0.0">groovyjarjarcommonscli</node>
+    <node x="3.0" y="0.0">Geom</node>
+    <node x="162.0" y="79.0">Robot</node>
+    <node x="244.0" y="153.0">groovyjarjarantlr</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Coords" target="Geom">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="Robot" target="GIS">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9380804953560371" x="309.5" y="313.0" />
+  <SelectedNodes>
+    <node>com</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
